@@ -9,7 +9,7 @@
         // $action = "get";
         switch ($entity) {
             case 'track':
-                require_once('model/track.php');
+                require_once('../model/track.php');
                 $track = new Track;
                 switch($action){
                     case 'get':
@@ -19,7 +19,7 @@
                     }
                 break;
             case 'user':
-                require_once('model/user.php');
+                require_once('../model/user.php');
                 $user = new User;
                 switch ($action) {
                     case 'create':

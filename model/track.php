@@ -1,5 +1,5 @@
 <?php
-    require_once('db_handler/db_connection.php');
+    require_once('../db_handler/db_connection.php');
 
     class Track extends DB {
 

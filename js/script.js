@@ -18,6 +18,7 @@ function displayOneTrack(apiUrl, id) {
         },
         success: function (data) {
             console.log("SUCCESS");
+            console.log(data);
             const trackInfo = JSON.parse(data);
             $("#txtID").text(trackInfo["TrackId"]);
             $("#txtTitle").text(trackInfo["Name"] + " this is the shiit");
