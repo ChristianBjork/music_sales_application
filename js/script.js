@@ -1,23 +1,24 @@
-$(document).ready(function() {
-    
-    
-    console.log("before display");
-    displayOneTrack(2);
+$(document).ready(function () {
+    const apiUrl = "api/api.php"
+    $("#btn1").click(function () {
+        console.log("Clicked");
+        displayOneTrack(apiUrl, 2);
+    });
 });
 
-function displayOneTrack(id) {
-console.log("before ajax")
-
+function displayOneTrack(apiUrl, id) {
+    console.log("DISPLAAAY");
     $.ajax({
-        url:"model/api.php",
+        url: apiUrl,
         type: "POST",
         data: {
+            entity: "track",
+            action: "get",
             id: id
         },
-        success: function(data) {
-            
+        success: function (data) {
+            console.log("SUCCESS");
             const trackInfo = JSON.parse(data);
-
             $("#txtID").text(trackInfo["TrackId"]);
             $("#txtTitle").text(trackInfo["Name"] + " this is the shiit");
         }

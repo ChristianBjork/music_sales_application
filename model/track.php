@@ -1,7 +1,7 @@
 <?php
-    require_once('handler_db/db_connection.php');
+    require_once('db_handler/db_connection.php');
 
-    class track extends DB {
+    class Track extends DB {
 
         /**
          * @param text - parameter which is used in the search query
@@ -10,15 +10,11 @@
          */
 
         function get($id) {
-
-            //Could use "heredoc" but for some reason it results in an error
-            // $id = 1;
             $query = <<<'SQL'
             SELECT TrackId, Name, Composer 
-            FROM chinook_abridged.track 
+            FROM track 
             WHERE TrackId = ?;
 SQL;
-
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$id]);
             $results = $stmt->fetch();
