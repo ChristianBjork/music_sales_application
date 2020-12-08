@@ -12,10 +12,12 @@ function loginToSignup() {
 }
 
 function validateLogin(apiUrl) {
-    console.log("validate login initiated");
+    
     $(".loginUser").click(function() {
-        let email = $("#loginEmail");
-        let password = $("#loginPassword")
+        console.log("validate login initiated");
+        let email = $("#loginEmail").val();
+        let password = $("#loginPassword").val();
+        console.log(email + " " + password);
         $.ajax({
             url: apiUrl,
             type: "POST",

@@ -1,19 +1,18 @@
 <?php
-
     if (!isset($_POST['entity']) || !isset($_POST['action'])) {
         echo json_encode("entity action, not set");
     } else {
         $entity = $_POST['entity'];
         $action = $_POST['action'];
-        // $entity = "track";
-        // $action = "get";
+        // $entity = "user";
+        // $action = "validate";
         switch ($entity) {
             case 'track':
                 require_once('../model/track.php');
                 $track = new Track;
                 switch($action){
                     case 'get':
-                        echo json_encode($track->get($_POST['id']));
+                        echo json_encode($track->get($_POST['searchVal']));
                         // echo json_encode($track->get(2));
                         break;
                     }
@@ -27,6 +26,7 @@
                         echo json_encode($user->create($_POST['firstName'], $_POST['lastName'], $_POST['password'], $_POST['company'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['country'], $_POST['postalCode'], $_POST['phone'], $_POST['fax'], $_POST['email']));
                         break;
                     case 'validate': 
+                        // echo json_encode($user->validate("mailing@ail.com", "pasword"));
                         echo json_encode($user->validate($_POST['email'], $_POST['password']));
                         break;
                 }
