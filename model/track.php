@@ -25,12 +25,12 @@ SQL;
                     $stmt->execute();
                 } else {
                     $query = <<<'SQL'
-                    SELECT TrackId, track.Name AS Title, Artist, Album, genre.Name AS Genre, Price 
+                    SELECT TrackId, T.Name AS title, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
                     FROM track T
                     INNER JOIN album AL ON T.AlbumId = AL.AlbumId
                     INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                     INNER JOIN genre G ON T.GenreId = G.GenreId
-                    WHERE Name LIKE ?;
+                    WHERE T.Name LIKE ?;
 SQL;
                     $stmt = $this->pdo->prepare($query);
                     $stmt->execute([$search]);
@@ -44,7 +44,6 @@ SQL;
                 exit();
             }
             
-
             return $results;
         }
     }

@@ -36,6 +36,7 @@
          */
 
         function create($firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email) {
+            try {
             // Check if the user email already exist
             $query = <<<'SQL'
                 SELECT COUNT(*) AS emailTotal FROM customer WHERE Email = ?;
@@ -56,6 +57,10 @@ SQL;
             $stmt->execute([$firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email]);
 
             $this->disconnect();
+        } catch (PDOException $e) {
+            die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+            exit();
+        }
 
             return true;
         }

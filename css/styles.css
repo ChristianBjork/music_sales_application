@@ -39,12 +39,9 @@ main {
 
 #music-info-table td, #music-info-table th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 5px;
 }
 
-#music-info-table tr:nth-child(odd) { background-color: white; }
-#music-info-table tr:nth-child(even) { background-color: #f2f2f2; }
-#music-info-table tr:hover {background-color: #ddd;}
 #music-info-table th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -52,6 +49,10 @@ main {
   color: white;
   background-color: #61a095;
 }
+
+#music-info-table tr:nth-child(odd) { background-color: white; }
+#music-info-table tr:nth-child(even) { background-color: #f2f2f2; }
+#music-info-table tr:hover {background-color: #ddd;}
 
 
 .login-box {

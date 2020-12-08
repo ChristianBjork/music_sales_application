@@ -31,6 +31,7 @@
             <button id="search" type="button">Search</button>
         </div>
         
+        <h2 id="info-title">Tracks</h2>
         <table id="music-info-table">
             <thead id="track-thead">
                 <tr>
@@ -42,23 +43,19 @@
                     <th>Action</th>
                 </tr>
             </thead>
+            <thead id="album-head" hidden>
+                <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th></th>
+                        <th></th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+            </thead>
+
             <tbody>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbköp</td>
-                    <td>Christina Berglund</td>
-                    <td>Sweden</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
+                
             </tbody>
         </table>
     </main>
