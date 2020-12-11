@@ -11,8 +11,8 @@
 
         function get($searchVal, $offset, $from) {
             $search = '%' . $searchVal . '%';
-            $offset = intval($offset);
-            $from = intval($from);
+            $offset = (int)$offset;
+            $from = (int)$from;
             $counter = 0;
             $result = array();
 
@@ -26,7 +26,7 @@
                     INNER JOIN album AL ON T.AlbumId = AL.AlbumId
                     INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                     INNER JOIN genre G ON T.GenreId = G.GenreId
-                    LIMIT ? OFFSET ?;
+                    LIMIT ?, ?;
 SQL;
                     $stmt = $this->pdo->prepare($query);
                     $stmt->execute([$from, $offset]);
@@ -38,7 +38,7 @@ SQL;
                     INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                     INNER JOIN genre G ON T.GenreId = G.GenreId
                     WHERE T.Name LIKE ?
-                    LIMIT ? OFFSET ?;
+                    LIMIT ?, ?;
 SQL;
                     $stmt = $this->pdo->prepare($query);
                     $stmt->execute([$search, $from, $offset]);
