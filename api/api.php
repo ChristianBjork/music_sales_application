@@ -12,7 +12,7 @@
                 $track = new Track;
                 switch($action){
                     case 'get':
-                        echo json_encode($track->get($_POST['searchVal']));
+                        echo json_encode($track->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
                         // echo json_encode($track->get(2));
                         break;
                     }
