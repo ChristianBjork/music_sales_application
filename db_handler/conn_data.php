@@ -1,6 +1,6 @@
 <?php
     // AWS db
-    $server = 'music-db.cyuj5nujrebe.us-east-1.rds.amazonaws.com';
+    $server = 'music-db.cnrs1uufqvyd.us-east-1.rds.amazonaws.com';
     $dbName = 'chinook_abridged';
     $user = 'admin';
     $pwd = 'music123';

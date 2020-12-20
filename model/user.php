@@ -84,7 +84,23 @@ SQL;
 
             $row = $stmt->fetch();
 
-            return (password_verify($password, $row['Password']));
-         }
+            if(password_verify($password, $row['Password'])) {
+                $_SESSION['userId'] = $row['CustomerId'];
+                $_SESSION['firstName'] = $row['FirstName'];
+                $_SESSION['lastName'] = $row['LastName'];
+                $_SESSION['email'] = $email;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+
+        function signOut(){
+            session_destroy();
+
+            return "User logged out";
+        }
+         
     }
 ?>

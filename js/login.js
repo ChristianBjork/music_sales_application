@@ -15,9 +15,8 @@ function validateLogin(apiUrl) {
     
     $(".loginUser").click(function() {
         console.log("validate login initiated");
-        let email = $("#loginEmail").val();
-        let password = $("#loginPassword").val();
-        console.log(email + " " + password);
+        let email = $.trim($("#loginEmail").val());
+        let password = $.trim($("#loginPassword").val());
         $.ajax({
             url: apiUrl,
             type: "POST",
@@ -28,8 +27,16 @@ function validateLogin(apiUrl) {
                 password: password
             },
             success: function(data){
-                const isLoggedIn = JSON.parse(data);
-                console.log("isLoggedIn? :" + isLoggedIn);
+                data = JSON.parse(data);
+                console.log(data);
+                if (data === true){
+                    console.log("TRUE");
+                    //window.location.replace("index.php");
+                    window.location.reload();
+                  } else {
+                    console.log("ALERT");
+                    alert("Login credentials uncorrect");
+                  }
             }
         });
     });
@@ -73,7 +80,11 @@ function createUser(apiUrl) {
         }, 
         success: function(data){
             let isUserAdded = JSON.parse(data);
-            console.log("Is user added?: " + isUserAdded);
+            if(isUserAdded == true) {
+                $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+            } else {
+                alert("Email already exists")
+            }
         }
         });
     });

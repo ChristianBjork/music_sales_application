@@ -20,28 +20,28 @@
                 //If search is empty retrive all information
                 //else search by track name
                 if($search == '%%') {
-                    $query = <<<'SQL'
-                    SELECT SQL_CALC_FOUND_ROWS TrackId, T.Name AS title, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
+                    $query = <<<SQL
+                    SELECT SQL_CALC_FOUND_ROWS TrackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
                     FROM track T
                     INNER JOIN album AL ON T.AlbumId = AL.AlbumId
                     INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                     INNER JOIN genre G ON T.GenreId = G.GenreId
-                    LIMIT ?, ?;
+                    LIMIT $from, $offset;
 SQL;
                     $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$from, $offset]);
+                    $stmt->execute([]);
                 } else {
-                    $query = <<<'SQL'
-                    SELECT SQL_CALC_FOUND_ROWS TrackId, T.Name AS title, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
+                    $query = <<<SQL
+                    SELECT SQL_CALC_FOUND_ROWS TrackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
                     FROM track T
                     INNER JOIN album AL ON T.AlbumId = AL.AlbumId
                     INNER JOIN artist A ON AL.ArtistId = A.ArtistId
                     INNER JOIN genre G ON T.GenreId = G.GenreId
-                    WHERE T.Name LIKE ?
-                    LIMIT ?, ?;
+                    WHERE CONCAT_WS('', TrackId, T.Name, T.Milliseconds, A.Name, AL.Title, G.Name, T.UnitPrice) LIKE ?
+                    LIMIT $from, $offset;
 SQL;
                     $stmt = $this->pdo->prepare($query);
-                    $stmt->execute([$search, $from, $offset]);
+                    $stmt->execute([$search]);
                 }
 
                 //$results = $stmt->fetchAll();
@@ -50,6 +50,7 @@ SQL;
                     extract($row);
                     $result[$counter]['TrackId'] = $row['TrackId'];
                     $result[$counter]['title'] = $row['title'];
+                    $result[$counter]['playtime'] = $row['playtime'];
                     $result[$counter]['artist'] = $row['artist'];
                     $result[$counter]['album'] = $row['album'];
                     $result[$counter]['genre'] = $row['genre'];
@@ -68,6 +69,27 @@ SQL;
                 exit();
             }
             
+            return $result;
+        }
+
+        function getModalInfo($id) {
+            try {
+                $query = <<<SQL
+                SELECT T.Composer AS composer, M.Name AS mediatype 
+                FROM track T
+                INNER JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
+                WHERE T.TrackId = ?           
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+            
+                $result = $stmt->fetch();
+
+                $this->disconnect();
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+            }
             return $result;
         }
     }

@@ -1,4 +1,5 @@
 <?php
+    session_start();
     if (!isset($_POST['entity']) || !isset($_POST['action'])) {
         echo json_encode("entity action, not set");
     } else {
@@ -15,6 +16,9 @@
                         echo json_encode($track->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
                         // echo json_encode($track->get(2));
                         break;
+                    case 'getModalInfo':
+                        echo json_encode($track->getModalInfo($_POST['id']));
+                        break;
                     }
                 break;
             case 'user':
@@ -28,6 +32,9 @@
                     case 'validate': 
                         // echo json_encode($user->validate("mailing@ail.com", "pasword"));
                         echo json_encode($user->validate($_POST['email'], $_POST['password']));
+                        break;
+                    case 'sign-out':
+                        echo json_encode($user->signOut());
                         break;
                 }
                 break;

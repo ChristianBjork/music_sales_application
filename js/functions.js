@@ -1,16 +1,21 @@
+const apiUrl = "api/api.php";
+const post = "POST";
+
 function setupTrackTable(data, offset, currentPage) {
     let table = ''
     console.log(data[data.length - 1]);
-
+    console.log(data[0].TrackId);
     data.forEach( function(trackInfo, idx, array) {
         if (idx !== array.length - 1) {
-            table += "<tr data-track_id='" + trackInfo.TrackId + "'>";
+            playtime = millisecondsToMinutes(trackInfo.playtime);
+            table += '<tr data-trackId="' + trackInfo.TrackId + '" id="track">';
                     table += "<td>" + trackInfo.title + "</td>";
+                    table += "<td>" + playtime + "</td>";
                     table += "<td>" + trackInfo.artist + "</td>";
                     table += "<td>" + trackInfo.album + "</td>";
                     table += "<td>" + trackInfo.genre + "</td>";
                     table += "<td>" + trackInfo.price + "$</td>";
-                    table += "<td><button>Info</button></td>";
+                    table += '<td><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
             table += "</tr>";
         }
     });
@@ -19,6 +24,12 @@ function setupTrackTable(data, offset, currentPage) {
     updatePagination(data[data.length - 1], offset, currentPage);
 }
 
+function millisecondsToMinutes(ms) {
+    var minutes = Math.floor(ms / 60000);
+    var seconds = ((ms % 60000) / 1000).toFixed(0);
+    return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min");
+
+}
 
 function updatePagination(maxRows, offset, currentPage){
     
@@ -26,7 +37,7 @@ function updatePagination(maxRows, offset, currentPage){
     var totalPages = Math.ceil(maxRows / offset)
     if (totalPages == 0) currentPage = 0;
     var returnHTML = "";
-    returnHTML += (currentPage == 1 || currentPage == 0) ? "<p>Page:</p><p class='pagination-page-disable'><i class='fas fa-angle-left'></i></p>" : "<p>Page</p><p class='pagination-page-left'><i class='fas fa-angle-left'></i></p>";
+    returnHTML += (currentPage == 1 || currentPage == 0) ? "<p>Page:</p><p class='pagination-page-disable'><i class='fas fa-angle-left'></i></p>" : "<p>Page:</p><p class='pagination-page-left'><i class='fas fa-angle-left'></i></p>";
     returnHTML += "<p class='current-page' data-current='" + currentPage + "' data-total='" + totalPages + "'>" + currentPage + " / " + totalPages + "</p>";
     returnHTML += (currentPage == totalPages) ? "<p class='pagination-page-disable'><i class='fas fa-angle-right'></i></p>" : "<p class='pagination-page-right'><i class='fas fa-angle-right'></i></p>";
     $('.pagination-info').html(returnHTML);
