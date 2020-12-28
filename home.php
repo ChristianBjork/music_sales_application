@@ -28,14 +28,14 @@
         </div>
     </header>
     <main>
-        
+
         <h2 id="info-title">Tracks</h2>
 
-        <div>
+        <div class="search-div">
             <select name="search-opt" id="search-opt">
                 <option value="track">Track</option>
-                <option value="artist">Artist</option>
                 <option value="album">Album</option>
+                <option value="artist">Artist</option>
             </select>
             <input id="search-val" type="text" placeholder="search">
             <button id="search" type="button">Search</button>
@@ -62,58 +62,71 @@
             <thead id="track-thead">
                 <tr>
                     <th>Track Title</th>
-                    <th>Play Time</th>
+                    <th>Playtime</th>
                     <th>Artist</th>
                     <th>Album</th>
                     <th>Genre</th>
                     <th>Price</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <thead id="artist-thead">
-                <tr>
-                        <th>Artist</th>
-                        <th>Albums</th>
-                        <th>Something</th>
-                        <th>Else</th>
-                        <th>Price</th>
-                        <th></th>
                 </tr>
             </thead>
             <thead id="album-thead">
                 <tr>
                         <th>Title</th>
                         <th>Artist</th>
-                        <th>Else</th>
-                        <th>Something</th>
+                        <th>Tracks</th>
                         <th>Price</th>
-                        <th></th>
                     </tr>
+            </thead>
+            <thead id="artist-thead">
+                <tr>
+                        <th>Artist</th>
+                        <th>Albums</th>
+                        <th>Tracks</th>
+                        <th>Genre</th>
+                </tr>
             </thead>
             <tbody id="music-info">
             </tbody>
         </table>
-
         <div class="modal" id="track-modal">
             <div class="modal-content">
                 <div class="title" id="track-modal-title">
                     <h3>Track Title - minutes</h3>
                     <span class="close"><i class="far fa-times-circle"></i></span>
                 </div>
-                <div id="playTime">
-                    <p>Play time: </p>
-                    <p></p>
-                </div>
-                <div id="mediaType">
-                    <p>Media Type:</p> 
-                    <p></p>
-                </div>
-
+                <div id="album"><p>Album:</p><p></p></div>
+                <div id="genre"><p>Genre:</p><p></p></div>
+                <div id="playTime"><p>Playtime:</p><p></p></div>
+                <div id="composer"><p>Composer:</p><p></p></div>
+                <div id="mediaType"><p>Media Type:</p><p></p></div>
+                <div id="fileSize"><p>Size:</p> <p></p></div>
             </div>
         </div>
-
-
-        
+        <div class="modal" id="album-modal">
+            <div class="modal-content">
+                <div class="title" id="album-modal-title">
+                    <h3>Album Title - artist</h3>
+                    <span class="close"><i class="far fa-times-circle"></i></span>
+                </div>
+                <div id="album-tracks"><p>Tracks:</p><p></p></div>
+                <div id="album-genre"><p>Genre:</p><p></p></div>
+                <div id="album-playTime"><p>Playtime:</p><p></p></div>
+                <div id="album-composer"><p>Composer:</p> <p></p></div>
+                <div id="album-mediaType"><p>Media Type:</p><p></p></div>
+                <div id="album-fileSize"><p>Size:</p> <p></p></div>
+            </div>
+        </div>
+        <div class="modal" id="artist-modal">
+            <div class="modal-content">
+                <div class="title" id="artist-modal-title">
+                    <h3>artist Name</h3>
+                    <span class="close"><i class="far fa-times-circle"></i></span>
+                </div> 
+                <div id="artist-albums"><p>Albums:</p><p></p></div>
+                <div id="artist-tracks"><p>Tracks:</p><p></p></div>
+                <div id="artist-genre"><p>Genre:</p><p></p></div>
+            </div>
+        </div>
     </main>
 
 </body>

@@ -5,8 +5,6 @@
     } else {
         $entity = $_POST['entity'];
         $action = $_POST['action'];
-        // $entity = "user";
-        // $action = "validate";
         switch ($entity) {
             case 'track':
                 require_once('../model/track.php');
@@ -14,12 +12,35 @@
                 switch($action){
                     case 'get':
                         echo json_encode($track->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
-                        // echo json_encode($track->get(2));
                         break;
                     case 'getModalInfo':
                         echo json_encode($track->getModalInfo($_POST['id']));
                         break;
-                    }
+                }
+                break;
+            case 'album':
+                require_once('../model/album.php');
+                $album = new Album;
+                switch($action) {
+                    case 'get':
+                        echo json_encode($album->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
+                        break;
+                    case 'getModalInfo':
+                        echo json_encode($album->getModalInfo($_POST['id']));
+                        break;
+                }
+                break;
+            case 'artist':
+                require_once('../model/artist.php');
+                $artist = new Artist;
+                switch($action) {
+                    case 'get':
+                        echo json_encode($artist->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
+                        break;
+                    case 'getModalInfo':
+                        echo json_encode($artist->getModalInfo($_POST['id']));
+                        break;
+                }
                 break;
             case 'user':
                 require_once('../model/user.php');

@@ -38,7 +38,7 @@
         function create($firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email) {
             try {
             // Check if the user email already exist
-            $query = <<<'SQL'
+            $query = <<<SQL
                 SELECT COUNT(*) AS emailTotal FROM customer WHERE Email = ?;
 SQL;
             $stmt = $this->pdo->prepare($query);
@@ -49,7 +49,7 @@ SQL;
 
             $password = password_hash($password, PASSWORD_DEFAULT);
 
-            $query = <<<'SQL'
+            $query = <<<SQL
                 INSERT INTO customer (FirstName, LastName, Password, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 SQL;
