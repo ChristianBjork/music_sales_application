@@ -48,7 +48,7 @@ function getTableInfo(from, currentPage) {
     console.log(entity + " --- " + searchVal);
     $.ajax({
         url: apiUrl,
-        type: post,
+        type: POST,
         data: JSON.stringify({
             searchVal: searchVal,
             offset: offset,
@@ -95,15 +95,19 @@ function getTableInfo(from, currentPage) {
 //Sign Out --------------------
 function signout() {
     $("#sign-out-btn").on('click', function () {
+        console.log("SIGNOUT");
+        apiUrl = setApiUrl("user", "sign-out");
         $.ajax({
             url: apiUrl,
-            type: post,
-            data: {
-                entity: "user",
-                action: "sign-out"
-            },
-            success: function () {
+            type: POST,
+            success: function (data) {
+                console.log(data);
                 window.location.reload();
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
         })
     });
@@ -138,7 +142,7 @@ function enableModalAction() {
         let apiUrl = setApiUrl(entity, action);
         $.ajax({
             url: apiUrl,
-            type: post,
+            type: POST,
             data: JSON.stringify({
                 id: trackId
             }),

@@ -1,5 +1,6 @@
-let apiUrl = "api/api.php";
-const post = "POST";
+let apiUrl;
+const POST = "POST";
+const GET = "GET";
 
 function setupTrackTable(data) {
     let table = ''
@@ -163,6 +164,16 @@ function setApiUrl(entity, action) {
                 case 'search':
                     return "api/artist/search.php";
                 }
+            break;
+        case "user":
+            switch(action){
+                case "create":
+                    return "api/user/create.php"
+                case "validate":
+                    return "api/user/validate.php"
+                case "sign-out":
+                    return "api/user/sign-out.php"
+            }
             break;
     }
 }

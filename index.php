@@ -1,8 +1,8 @@
 <?php
     session_start();
     if(isset($_SESSION['userId'])){
-        require_once('home.php');
+        require_once('views/home.php');
     } else {
-        require_once('login.php');
+        require_once('views/login.php');
     }
 ?>

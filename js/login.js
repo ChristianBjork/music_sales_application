@@ -1,8 +1,7 @@
 $(document).ready(function() {
-    const apiUrl = "api/api.php"
     loginToSignup();
-    createUser(apiUrl);
-    validateLogin(apiUrl);
+    createUser();
+    validateLogin();
 });
 
 function loginToSignup() {
@@ -11,25 +10,22 @@ function loginToSignup() {
     });
 }
 
-function validateLogin(apiUrl) {
-    
+function validateLogin() {
     $(".loginUser").click(function() {
         console.log("validate login initiated");
         let email = $.trim($("#loginEmail").val());
         let password = $.trim($("#loginPassword").val());
+        apiUrl = setApiUrl("user", "validate");
         $.ajax({
             url: apiUrl,
-            type: "POST",
-            data: {
-                entity: "user",
-                action: "validate",
+            type: POST,
+            data: JSON.stringify({
                 email: email,
                 password: password
-            },
+            }),
             success: function(data){
-                data = JSON.parse(data);
                 console.log(data);
-                if (data === true){
+                if (data.isUserValid === true){
                     console.log("TRUE");
                     //window.location.replace("index.php");
                     window.location.reload();
@@ -37,13 +33,18 @@ function validateLogin(apiUrl) {
                     console.log("ALERT");
                     alert("Login credentials uncorrect");
                   }
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
         });
     });
 }
 
 
-function createUser(apiUrl) {
+function createUser() {
     $(".createUser").click(function () {
         console.log("CREATE CLICKED");
         let firstName = $.trim($("#firstName").val());
@@ -58,34 +59,37 @@ function createUser(apiUrl) {
         let phone = $.trim($("#phone").val());
         let fax = $.trim($("#fax").val());
         let email = $.trim($("#email").val());
-    
+
+        apiUrl = setApiUrl("user", "create");
         $.ajax({
-        url: apiUrl,
-        type: "POST",
-        data: {
-            entity: "user",
-            action: "create",
-            firstName: firstName,
-            lastName: lastName,
-            password: password,
-            company: company,
-            address: address,
-            city: city,
-            state: state,
-            country: country,
-            postalCode: postalCode,
-            phone: phone,
-            fax: fax,
-            email: email
-        }, 
-        success: function(data){
-            let isUserAdded = JSON.parse(data);
-            if(isUserAdded == true) {
-                $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-            } else {
-                alert("Email already exists")
+            url: apiUrl,
+            type: POST,
+            data: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                password: password,
+                company: company,
+                address: address,
+                city: city,
+                state: state,
+                country: country,
+                postalCode: postalCode,
+                phone: phone,
+                fax: fax,
+                email: email
+            }), 
+            success: function(data){
+                if(data.isUserCreated == true) {
+                    $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+                } else {
+                    alert("Email already exists")
+                }
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
-        }
         });
     });
 }

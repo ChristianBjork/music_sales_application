@@ -1,5 +1,5 @@
 <?php
-    require_once('../db_handler/db_connection.php');
+    require_once('../../db_handler/db_connection.php');
 
     class User extends DB {
 
@@ -29,7 +29,6 @@ SQL;
             die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
             exit();
         }
-
             return true;
         }
 
@@ -43,7 +42,6 @@ SQL;
             }
 
             $row = $stmt->fetch();
-
             if(password_verify($password, $row['Password'])) {
                 $_SESSION['userId'] = $row['CustomerId'];
                 $_SESSION['firstName'] = $row['FirstName'];
@@ -54,7 +52,6 @@ SQL;
                 return false;
             }
         }
-
 
         function signOut(){
             session_destroy();
