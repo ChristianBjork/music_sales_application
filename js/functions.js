@@ -1,4 +1,4 @@
-const apiUrl = "api/api.php";
+let apiUrl = "api/api.php";
 const post = "POST";
 
 function setupTrackTable(data) {
@@ -66,58 +66,54 @@ function updatePagination(maxRows, offset, currentPage){
 }
 
 function setupTrackModal(data) {
-            let modalInfo = JSON.parse(data);
-            let playtime = millisecondsToMinutes(modalInfo.playtime);
-            $("#track-modal-title h3").text(modalInfo.title + " - (" + modalInfo.artist + ")");
-            $("#album").find("p:eq(1)").text(modalInfo.album);
-            $("#genre").find("p:eq(1)").text(modalInfo.genre);
-            $("#playTime").find("p:eq(1)").text(playtime);
-            $("#mediaType").find("p:eq(1)").text(modalInfo.mediatype);
-            if(modalInfo.composer == null) {
-                $("#composer").find("p:eq(0)").text("No composers credited for this song.");
-        
-            } else if(modalInfo.composer.split(",").length > 1) {
-                $("#composer").find("p:eq(0)").text("Composers:");
-            } else {
-                $("#composer").find("p:eq(0)").text("Composer:");
-            }
-            $("#composer").find("p:eq(1)").text(modalInfo.composer);
-            let fileSize = bytesToSize(modalInfo.fileSize);
-            $("#fileSize").find("p:eq(1)").text(fileSize);
-        
-            $("#track-modal").show();
+    let playtime = millisecondsToMinutes(data.playtime);
+    $("#track-modal-title h3").text(data.title + " - (" + data.artist + ")");
+    $("#album").find("p:eq(1)").text(data.album);
+    $("#genre").find("p:eq(1)").text(data.genre);
+    $("#playTime").find("p:eq(1)").text(playtime);
+    $("#mediaType").find("p:eq(1)").text(data.mediatype);
+    if(data.composer == null) {
+        $("#composer").find("p:eq(0)").text("No composers credited for this song.");
+
+    } else if(data.composer.split(",").length > 1) {
+        $("#composer").find("p:eq(0)").text("Composers:");
+    } else {
+        $("#composer").find("p:eq(0)").text("Composer:");
+    }
+    $("#composer").find("p:eq(1)").text(data.composer);
+    let fileSize = bytesToSize(data.fileSize);
+    $("#fileSize").find("p:eq(1)").text(fileSize);
+
+    $("#track-modal").show();
 }
 
 function setupAlbumModal(data) {
-    let modalInfo = JSON.parse(data);
-    $("#album-modal-title h3").text(modalInfo.title + " - (" + modalInfo.artist + ")");
-    $("#album-tracks").find("p:eq(1)").text(modalInfo.tracks);
-    $("#album-genre").find("p:eq(1)").text(modalInfo.genre);
-    let playtime = millisecondsToMinutes(modalInfo.totalPlaytime);
+    $("#album-modal-title h3").text(data.title + " - (" + data.artist + ")");
+    $("#album-tracks").find("p:eq(1)").text(data.tracks);
+    $("#album-genre").find("p:eq(1)").text(data.genre);
+    let playtime = millisecondsToMinutes(data.totalPlaytime);
     console.log("PLAYTIME: " + playtime);
     $("#album-playTime").find("p:eq(1)").text(playtime);
-    if(modalInfo.composer == null) {
-        $("#album-composer").find("p:eq(0)").text("No composers credited for this song.");
-        
-    } else if(modalInfo.composer.split(",").length > 1) {
+    if(data.composer == null) {
+        $("#album-composer").find("p:eq(0)").text("No composers credited for this song.");  
+    } else if(data.composer.split(",").length > 1) {
         $("#album-composer").find("p:eq(0)").text("Composers:");
     } else {
         $("#album-composer").find("p:eq(0)").text("Composer:");
     }
-    $("#album-composer").find("p:eq(1)").text(modalInfo.composer);
-    $("#album-mediaType").find("p:eq(1)").text(modalInfo.mediatype);
-    let totalFileSize = bytesToSize(modalInfo.totalFileSize);
+    $("#album-composer").find("p:eq(1)").text(data.composer);
+    $("#album-mediaType").find("p:eq(1)").text(data.mediatype);
+    let totalFileSize = bytesToSize(data.totalFileSize);
     $("#album-fileSize").find("p:eq(1)").text(totalFileSize);
 
     $("#album-modal").show();
 }
 
 function setupArtistModal(data) {
-    let modalInfo = JSON.parse(data);
-    $("#artist-modal-title h3").text(modalInfo.title);
-    $("#artist-albums").find("p:eq(1)").text(modalInfo.albums);
-    $("#artist-tracks").find("p:eq(1)").text(modalInfo.tracks);
-    $("#artist-genre").find("p:eq(1)").text(modalInfo.genre);
+    $("#artist-modal-title h3").text(data.title);
+    $("#artist-albums").find("p:eq(1)").text(data.albums);
+    $("#artist-tracks").find("p:eq(1)").text(data.tracks);
+    $("#artist-genre").find("p:eq(1)").text(data.genre);
 
     $("#artist-modal").show();
 }
@@ -126,7 +122,6 @@ function millisecondsToMinutes(ms) {
     var minutes = Math.floor(ms / 60000);
     var seconds = ((ms % 60000) / 1000).toFixed(0);
     return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds + " min");
-
 }
 
 function bytesToSize(bytes) {
@@ -136,3 +131,38 @@ function bytesToSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+// setting the url for the wanted api within ajax calls
+function setApiUrl(entity, action) {
+    switch(entity) {
+        case "track":
+            switch(action){
+                case "getAll":
+                    return "api/track/getAll.php";
+                case 'getById':
+                    return "api/track/getById.php";
+                case 'search':
+                    return "api/track/search.php";
+                }
+            break;
+        case "album":
+            switch(action){
+                case "getAll":
+                    return "api/album/getAll.php";
+                case 'getById':
+                    return "api/album/getById.php";
+                case 'search':
+                    return "api/album/search.php";
+                }
+            break;
+        case "artist":
+            switch(action){
+                case "getAll":
+                    return "api/artist/getAll.php";
+                case 'getById':
+                    return "api/artist/getById.php";
+                case 'search':
+                    return "api/artist/search.php";
+                }
+            break;
+    }
+}

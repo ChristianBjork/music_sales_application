@@ -10,11 +10,10 @@
                 require_once('../model/track.php');
                 $track = new Track;
                 switch($action){
-                    case 'get':
-                        echo json_encode($track->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
+                    case 'getAll':
+                        echo json_encode($track->getAll($_POST['searchVal'], $_POST['offset'], $_POST['from']));
                         break;
-                    case 'getModalInfo':
-                        echo json_encode($track->getModalInfo($_POST['id']));
+                    case 'getById':
                         break;
                 }
                 break;
@@ -22,11 +21,11 @@
                 require_once('../model/album.php');
                 $album = new Album;
                 switch($action) {
-                    case 'get':
-                        echo json_encode($album->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
+                    case 'getAll':
+                        echo json_encode($album->getAll($_POST['searchVal'], $_POST['offset'], $_POST['from']));
                         break;
-                    case 'getModalInfo':
-                        echo json_encode($album->getModalInfo($_POST['id']));
+                    case 'getById':
+                        echo json_encode($album->getById($_POST['id']));
                         break;
                 }
                 break;
@@ -34,11 +33,11 @@
                 require_once('../model/artist.php');
                 $artist = new Artist;
                 switch($action) {
-                    case 'get':
-                        echo json_encode($artist->get($_POST['searchVal'], $_POST['offset'], $_POST['from']));
+                    case 'getAll':
+                        echo json_encode($artist->getAll($_POST['searchVal'], $_POST['offset'], $_POST['from']));
                         break;
-                    case 'getModalInfo':
-                        echo json_encode($artist->getModalInfo($_POST['id']));
+                    case 'getById':
+                        echo json_encode($artist->getById($_POST['id']));
                         break;
                 }
                 break;

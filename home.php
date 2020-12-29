@@ -10,11 +10,9 @@
     <title>Music Store</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    </style>
 </head>
 
 <body>
-
     <header>
         <div class="img-title">
             <img src="img/notes-logo.png" alt="notes-logo" id="notes-logo">

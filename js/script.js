@@ -37,24 +37,26 @@ function searchMusic() {
 function getTableInfo(from, currentPage) {
     let offset = $(".row-per-page").val();
     let searchVal = $("#search-val").val();
-    let searchOpt = $.trim($("#search-opt").val());
-    if (search.length === 0) search = '';
-    console.log(searchOpt + " --- " + searchVal);
+    let entity = $.trim($("#search-opt").val());
+    let action;
+    if (searchVal.length === 0) {
+        action = "getAll";
+    } else {
+        action = "search";
+    }
+    apiUrl = setApiUrl(entity, action);
+    console.log(entity + " --- " + searchVal);
     $.ajax({
         url: apiUrl,
         type: post,
-        data: {
-            entity: searchOpt,
-            action: "get",
+        data: JSON.stringify({
             searchVal: searchVal,
             offset: offset,
             from: from
-        },
+        }),
         success: function (data) {
             console.log(data);
-            data = JSON.parse(data);
-            
-            switch (searchOpt) {
+            switch (entity) {
                 case "track":
                     console.log("TRACK SEARCH");
                     $("#track-thead").show();
@@ -81,6 +83,11 @@ function getTableInfo(from, currentPage) {
                     break;
             }
             updatePagination(data[data.length - 1], offset, currentPage);
+        }, failure: function(e) {
+            console.log('failure: ' + e);
+        }, error: function(e) {
+            console.log('error: ' + e);
+            console.log(JSON.stringify(e));
         }
     });
 }
@@ -127,15 +134,14 @@ function enableModalAction() {
         let trackId = $(this).attr("data-id");
         let entity = $(this).attr("id");
         console.log("ID: " + entity);
-
+        let action = 'getById';
+        let apiUrl = setApiUrl(entity, action);
         $.ajax({
             url: apiUrl,
             type: post,
-            data: {
-                entity: entity,
-                action: 'getModalInfo',
+            data: JSON.stringify({
                 id: trackId
-            },
+            }),
             success: function(data) {
                 console.log(data);
                 switch (entity) {
@@ -149,6 +155,11 @@ function enableModalAction() {
                         setupArtistModal(data);
                         break;
                 }
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
         });
     });

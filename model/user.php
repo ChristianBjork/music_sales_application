@@ -3,38 +3,6 @@
 
     class User extends DB {
 
-        // public int $userID;
-        // public string $firstName;
-        // public string $lastName;
-        // public string $password;
-        // public string $company;
-        // public string $address;
-        // public string $city;
-        // public string $state;
-        // public string $country;
-        // public string $postalCode;
-        // public string $phone;
-        // public string $fax;
-        // public string $email;
-
-        /**
-         * CREATE NEW USER
-         * 
-         * @param firstName
-         * @param lastName
-         * @param password
-         * @param company
-         * @param address
-         * @param city
-         * @param state
-         * @param country
-         * @param postalCode
-         * @param phone
-         * @param fax
-         * @param email
-         * @return  true if the user is create and false if the user already exists
-         */
-
         function create($firstName, $lastName, $password, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email) {
             try {
             // Check if the user email already exist
@@ -64,14 +32,6 @@ SQL;
 
             return true;
         }
-
-        /**
-         * VALIDATE USER LOGIN
-         * 
-         * @param email
-         * @param password
-         * @return true if password is valid
-         */
 
         function validate($email, $password) {
             //Select user data
