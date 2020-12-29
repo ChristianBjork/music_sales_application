@@ -2,21 +2,17 @@
 //required headers
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once('../../model/album.php');
 $album = new Album;
 
-// get posted data
-$data = json_decode(file_get_contents("php://input"));
-
-// make sure data is not empty
-if(isset($data->searchVal) && isset($data->offset) && isset($data->from)){
-    $searchVal = trim($data->searchVal); 
-    $offset = trim($data->offset);
-    $from = trim($data->from);
+if(isset($_GET['searchVal']) && isset($_GET['offset']) && isset($_GET['from'])){
+    $searchVal = trim($_GET['searchVal']); 
+    $offset = trim($_GET['offset']);
+    $from = trim($_GET['from']);
 
     http_response_code(200);
     echo json_encode($album->searchAlbum($searchVal, $offset, $from));

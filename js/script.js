@@ -3,6 +3,7 @@ $(document).ready(function () {
     searchMusic();
     enableModalAction();
     signout();
+
 });
 
 //Search --------------------
@@ -29,7 +30,6 @@ function searchMusic() {
                 console.log("ARTIST SEARCH");
                 getTableInfo(0, 1);
                 break;
-            
         }
     });
 }
@@ -48,14 +48,15 @@ function getTableInfo(from, currentPage) {
     console.log(entity + " --- " + searchVal);
     $.ajax({
         url: apiUrl,
-        type: POST,
-        data: JSON.stringify({
+        type: GET,
+        data:{
             searchVal: searchVal,
             offset: offset,
             from: from
-        }),
+        },
         success: function (data) {
             console.log(data);
+           // data = JSON.parse(data);
             switch (entity) {
                 case "track":
                     console.log("TRACK SEARCH");
@@ -142,10 +143,10 @@ function enableModalAction() {
         let apiUrl = setApiUrl(entity, action);
         $.ajax({
             url: apiUrl,
-            type: POST,
-            data: JSON.stringify({
+            type: GET,
+            data: {
                 id: trackId
-            }),
+            },
             success: function(data) {
                 console.log(data);
                 switch (entity) {

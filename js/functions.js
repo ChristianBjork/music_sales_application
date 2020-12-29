@@ -15,8 +15,10 @@ function setupTrackTable(data) {
                     table += "<td>" + trackInfo.album + "</td>";
                     table += "<td>" + trackInfo.genre + "</td>";
                     table += "<td>" + trackInfo.price + "$</td>";
+                    table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
                     table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
-            table += "</tr>";
+                    table += "<?php } ?>";
+                table += "</tr>";
         }
     });
     $("#music-info-table").find("tbody").html(table);

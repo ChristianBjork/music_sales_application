@@ -2,19 +2,16 @@
 //required headers
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once('../../model/track.php');
 $track = new Track;
 
-// get posted data
-$data = json_decode(file_get_contents("php://input"));
-
 // make sure data is not empty
-if(isset($data->id)){
-    $id = trim($data->id); 
+if(isset($_GET['id'])){
+    $id = trim($_GET['id']); 
 
     http_response_code(200);
     echo json_encode($track->getById($id));
