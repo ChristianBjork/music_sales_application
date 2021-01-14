@@ -10,7 +10,6 @@
     <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>
-    <?php //include_once("api\api.php") ?>
     <div class="login-box">
         <div class="form">
             <form class="register-form">

@@ -1,34 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Store</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </head>
-
 <body>
-    <header>
-        <div class="img-title">
-            <img src="img/notes-logo.png" alt="notes-logo" id="notes-logo">
-            <div class="home-title">
-                <h1>Music Store</h1>
-            </div>
-        </div>
-        <div class="user-signout">
-            <i class="far fa-user fa-2x h-icon"></i>
-            <i class="fas fa-sign-out-alt fa-2x h-icon" id="sign-out-btn"></i>
-        </div>
-    </header>
+    <?php
+        require_once("header.php");
+    ?>
     <main>
-
-        <h2 id="info-title">Tracks</h2>
-
+            <div class="flex-title">
+                <h2 id="info-title">Tracks</h2>
+            </div>
         <div class="search-div">
             <select name="search-opt" id="search-opt">
                 <option value="track">Track</option>
@@ -38,7 +28,6 @@
             <input id="search-val" type="text" placeholder="search">
             <button id="search" type="button">Search</button>
         </div>
-
         <div class='pagination'>
             <div class='search-results-box'>
                 <p class='search-results'></p>
@@ -69,23 +58,24 @@
             </thead>
             <thead id="album-thead">
                 <tr>
-                        <th>Title</th>
-                        <th>Artist</th>
-                        <th>Tracks</th>
-                        <th>Price</th>
-                    </tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Tracks</th>
+                    <th>Price</th>
+                </tr>
             </thead>
             <thead id="artist-thead">
                 <tr>
-                        <th>Artist</th>
-                        <th>Albums</th>
-                        <th>Tracks</th>
-                        <th>Genre</th>
+                    <th>Artist</th>
+                    <th>Albums</th>
+                    <th>Tracks</th>
+                    <th>Genre</th>
                 </tr>
             </thead>
             <tbody id="music-info">
             </tbody>
         </table>
+        <?php if($_SESSION['isAdmin'] === 0) { ?>
         <div class="modal" id="track-modal">
             <div class="modal-content">
                 <div class="title" id="track-modal-title">
@@ -125,6 +115,9 @@
                 <div id="artist-genre"><p>Genre:</p><p></p></div>
             </div>
         </div>
+        <?php
+            }
+        ?>
     </main>
 
 </body>

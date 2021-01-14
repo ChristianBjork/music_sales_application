@@ -3,6 +3,33 @@
 
     class Artist extends DB {
 
+        function create($name) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                    INSERT INTO artist (Name) 
+                    VALUES (?);
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$name]);
+    
+                $affectedRows = $stmt->rowCount();
+                if ($affectedRows == 0) {
+                    $result['isArtistCreated'] = false;
+                } else {
+                    $result['isArtistCreated'] = true;
+                }
+                $result['affectedRows'] = $affectedRows;
+                $this->disconnect();
+                
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
+            }
+                return $result;
+        }
+
         function getAll($offset, $from){
             $offset = (int)$offset;
             $from = (int)$from;
@@ -46,6 +73,57 @@ SQL;
             return $result;
         }
 
+        function getById($id) {
+            try {
+                $query = <<<SQL
+                SELECT A.ArtistId, A.Name as title, GROUP_CONCAT(DISTINCT(AL.Title) SEPARATOR ', ') AS albums, GROUP_CONCAT(DISTINCT(T.Name) SEPARATOR ', ') AS tracks, G.Name AS genre
+                FROM artist A
+                INNER JOIN album AL ON A.ArtistId = AL.ArtistId
+                INNER JOIN track T ON T.AlbumId = AL.AlbumId
+                INNER JOIN genre G ON G.GenreId = T.GenreId
+                WHERE A.ArtistId = ?;           
+SQL;
+        
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+            
+                $result = $stmt->fetch();
+        
+                $this->disconnect();
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+            }
+            return $result;
+        }
+
+        function delete($id) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                DELETE FROM artist WHERE ArtistId = ?;
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+                $deletedRows = $stmt->rowCount();
+                
+                if ($deletedRows == 0) {
+                    $result['isArtistDeleted'] = false;
+                } else {
+                    $result['isArtistDeleted'] = true;
+                }
+
+                $result['deletedRows'] = $deletedRows;
+                $this->disconnect();
+
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
+            }
+            return $result;
+        }
+
         function searchArtist($searchVal, $offset, $from) {
             $search = '%' . $searchVal . '%';
             $offset = (int)$offset;
@@ -83,30 +161,6 @@ SQL;
 
                 $this->disconnect();
 
-            } catch (PDOException $e) {
-                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
-                exit();
-            }
-            return $result;
-        }
-
-        function getById($id) {
-            try {
-                $query = <<<SQL
-                SELECT A.ArtistId, A.Name as title, GROUP_CONCAT(DISTINCT(AL.Title) SEPARATOR ', ') AS albums, GROUP_CONCAT(DISTINCT(T.Name) SEPARATOR ', ') AS tracks, G.Name AS genre
-                FROM artist A
-                INNER JOIN album AL ON A.ArtistId = AL.ArtistId
-                INNER JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN genre G ON G.GenreId = T.GenreId
-                WHERE A.ArtistId = ?;           
-SQL;
-
-                $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$id]);
-            
-                $result = $stmt->fetch();
-
-                $this->disconnect();
             } catch (PDOException $e) {
                 die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
                 exit();

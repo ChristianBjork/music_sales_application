@@ -33,24 +33,47 @@ SQL;
         }
 
         function validate($email, $password) {
+            $result = [];
             //Select user data
             $query = "SELECT CustomerId, FirstName, LastName, Password FROM customer WHERE Email = ?;";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$email]);
-            if ($stmt->rowCount() === 0) {
-                return false;
+            
+            if ($stmt->rowCount() == 0) {
+
+                $query = "SELECT Password FROM admin";
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute();
+            
+                $adminPassword = $stmt->fetch();
+
+                if(password_verify($password, $adminPassword['Password'])) {
+                    $_SESSION['userId'] = 0;
+                    $_SESSION['isAdmin'] = 1;
+                    $result['isValid'] = true;
+                    $result['isAdmin'] = true;
+                    return $result;
+                } else {
+                    $result['isValid'] = false;
+                    return $result;
+                }
             }
 
             $row = $stmt->fetch();
+            
             if(password_verify($password, $row['Password'])) {
                 $_SESSION['userId'] = $row['CustomerId'];
                 $_SESSION['firstName'] = $row['FirstName'];
                 $_SESSION['lastName'] = $row['LastName'];
                 $_SESSION['email'] = $email;
-                return true;
+                $_SESSION['isAdmin'] = 0;
+                $result['isValid'] = true;
+                $result['isAdmin'] = false;
             } else {
-                return false;
+                $result['isValid'] = false;
             }
+
+            return $result;
         }
 
         function signOut(){

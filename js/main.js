@@ -45,7 +45,6 @@ function getTableInfo(from, currentPage) {
         action = "search";
     }
     apiUrl = setApiUrl(entity, action);
-    console.log(entity + " --- " + searchVal);
     $.ajax({
         url: apiUrl,
         type: GET,
@@ -56,7 +55,6 @@ function getTableInfo(from, currentPage) {
         },
         success: function (data) {
             console.log(data);
-           // data = JSON.parse(data);
             switch (entity) {
                 case "track":
                     console.log("TRACK SEARCH");

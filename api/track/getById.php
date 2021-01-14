@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once('../../model/track.php');
+require_once('../../models/track.php');
 $track = new Track;
 
 // make sure data is not empty

@@ -41,18 +41,23 @@ header .home-title {
   height: 60px;
 }
 
-header .user-signout {
+header .header-icons {
   display: flex;
   float: right;
-  margin: 15px 25px 5px 25px;
+  margin: 17px 25px 0px 25px;
 }
 
-header .user-signout i {
+header .header-icons i {
   margin: 0 10px;
+  cursor: pointer;
 }
 
-header .h-icon {
-  cursor: pointer;
+header #add-btn:hover {
+  color: #79d67d;
+}
+
+header #shopping-cart-btn:hover, header #profile-btn:hover{
+  color: #d1c076;
 }
 
 header #sign-out-btn:hover {
@@ -63,8 +68,13 @@ main {
   margin: 0px 100px;
 }
 
-h2{
+.flex-title {
+  display: flex;
   margin-bottom: 10px;
+}
+
+.flex-title h2{
+  margin-right: 10px;
 }
 
 .pagination {
@@ -136,6 +146,15 @@ tbody tr:last-child td:first-child {
 tbody tr:last-child td:nth-last-child(2) {
   border-radius: 0 0 4px 0;
 }
+
+tr#artist:last-child td:nth-last-child(2) {
+  border-radius: 0 0 0 0;
+}
+
+tr#artist:last-child td:last-child {
+  border-radius: 0 0 4px 0;
+}
+
 
 #music-info-table #purchase-column{
   text-align: center;

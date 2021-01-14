@@ -18,20 +18,21 @@ function validateLogin() {
         apiUrl = setApiUrl("user", "validate");
         $.ajax({
             url: apiUrl,
-            type: POST,
-            data: JSON.stringify({
+            type: GET,
+            data: {
                 email: email,
                 password: password
-            }),
+            },
             success: function(data){
                 console.log(data);
-                if (data.isUserValid === true){
+                isAdmin = data.isAdmin;
+                if (data.isValid === true){
                     console.log("TRUE");
                     //window.location.replace("index.php");
                     window.location.reload();
                   } else {
                     console.log("ALERT");
-                    alert("Login credentials uncorrect");
+                    alert("Login credentials incorrect");
                   }
             }, failure: function(e) {
                 console.log('failure: ' + e);

@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once('../../model/artist.php');
+require_once('../../models/artist.php');
 $artist = new Artist;
 
 // make sure data is not empty

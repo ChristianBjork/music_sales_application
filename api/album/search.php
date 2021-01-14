@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once('../../model/album.php');
+require_once('../../models/album.php');
 $album = new Album;
 
 if(isset($_GET['searchVal']) && isset($_GET['offset']) && isset($_GET['from'])){

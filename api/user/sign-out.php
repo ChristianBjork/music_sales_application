@@ -7,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once('../../model/user.php');
+require_once('../../models/user.php');
 $user = new User;
 
     http_response_code(201);
