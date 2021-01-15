@@ -16,8 +16,14 @@ if(!empty($data->id)) {
     $artist = new Artist;
     $id = trim($data->id);
     
-    http_response_code(200);
-    echo json_encode($artist->delete($id));
+    $result = $artist->delete($id);
+    if ($result['isArtistDeleted']) {
+        http_response_code(200);
+    } else {
+        http_response_code(404);
+    }
+    echo json_encode($result);
+
 } else {
     // set response code - 503 service unavailable
     http_response_code(503);

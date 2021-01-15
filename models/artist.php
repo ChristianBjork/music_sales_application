@@ -97,6 +97,35 @@ SQL;
             return $result;
         }
 
+        function update($id, $name) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                    UPDATE artist 
+                    SET Name = ?
+                    WHERE ArtistId = ?
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$name, $id]);
+    
+                $affectedRows = $stmt->rowCount();
+                
+                if ($affectedRows == 0) {
+                    $result['isArtistUpdated'] = false;
+                } else {
+                    $result['isArtistUpdated'] = true;
+                }
+                $result['affectedRows'] = $affectedRows;
+                $this->disconnect();
+
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
+            }
+                return $result;
+        }
+
         function delete($id) {
             $result = array();
             try {

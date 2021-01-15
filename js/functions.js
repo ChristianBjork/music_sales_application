@@ -14,7 +14,7 @@ function setupTrackTable(data) {
                     table += "<td>" + trackInfo.artist + "</td>";
                     table += "<td>" + trackInfo.album + "</td>";
                     table += "<td>" + trackInfo.genre + "</td>";
-                    table += "<td>" + trackInfo.price + "$</td>";
+                    table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
                     table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
                     table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
                     table += "<?php } ?>";
@@ -33,7 +33,7 @@ function setupAlbumTable(data){
                     table += "<td>" + albumInfo.title + "</td>";
                     table += "<td>" + albumInfo.artist + "</td>";
                     table += "<td>" + albumInfo.numOfTracks + "</td>";
-                    table += "<td>" + albumInfo.albumPrice + "$</td>";
+                    table += "<td>" + (albumInfo.albumPrice == null ? "0" : albumInfo.albumPrice) + "$</td>";
                     table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
             table += "</tr>";
         }
@@ -98,7 +98,7 @@ function setupAlbumModal(data) {
     console.log("PLAYTIME: " + playtime);
     $("#album-playTime").find("p:eq(1)").text(playtime);
     if(data.composer == null) {
-        $("#album-composer").find("p:eq(0)").text("No composers credited for this song.");  
+        $("#album-composer").find("p:eq(0)").text("No composers credited for this album.");  
     } else if(data.composer.split(",").length > 1) {
         $("#album-composer").find("p:eq(0)").text("Composers:");
     } else {

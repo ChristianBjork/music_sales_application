@@ -140,7 +140,7 @@ SQL;
                 INNER JOIN genre G ON T.GenreId = G.GenreId
                 INNER JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
                 WHERE T.TrackId = ?;           
-        SQL;
+SQL;
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$id]);
             
@@ -153,7 +153,7 @@ SQL;
             }
             return $result;
         }
-        
+
         function searchTrack($searchVal, $offset, $from) {
             $search = '%' . $searchVal . '%';
             $offset = (int)$offset;

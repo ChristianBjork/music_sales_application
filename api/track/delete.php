@@ -16,8 +16,13 @@ if(!empty($id)) {
     require_once('../../models/track.php');
     $track = new Track;
     
-    http_response_code(200);
-    echo json_encode($track->delete($id));    
+    $result = $track->delete($id);
+    if ($result['isTrackDeleted']) {
+        http_response_code(200);
+    } else {
+        http_response_code(404);
+    }
+    echo json_encode($result); 
 } else {
     // set response code - 503 service unavailable
     http_response_code(503);

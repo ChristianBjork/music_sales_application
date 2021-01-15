@@ -34,9 +34,15 @@ if(
     $bytes = trim($data->bytes); 
     $unitPrice = trim($data->unitPrice); 
 
-    http_response_code(200);
-    echo json_encode($track->update($id, $name, $albumId, $mediaTypeId, $genreId, $composer, $milliseconds, $bytes, $unitPrice));
+    $result = $track->update($id, $name, $albumId, $mediaTypeId, $genreId, $composer, $milliseconds, $bytes, $unitPrice);
 
+    if ($result['isTrackUpdated']) {
+        http_response_code(200);
+    } else {
+        http_response_code(404);
+    }
+    echo json_encode($result);
+    
 } else{
     // set response code - 503 service unavailable
     http_response_code(503);

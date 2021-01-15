@@ -3,6 +3,33 @@
 
     class Album extends DB {
 
+        function create($name, $artistId) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                    INSERT INTO album (Title, ArtistId) 
+                    VALUES (?, ?);
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$name, $artistId]);
+    
+                $affectedRows = $stmt->rowCount();
+                if ($affectedRows == 0) {
+                    $result['isAlbumCreated'] = false;
+                } else {
+                    $result['isAlbumCreated'] = true;
+                }
+                $result['affectedRows'] = $affectedRows;
+                $this->disconnect();
+                
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
+            }
+                return $result;
+        }
+
         function getAll($offset, $from) {
             $offset = (int)$offset;
             $from = (int)$from;
@@ -40,6 +67,87 @@ SQL;
             } catch (PDOException $e) {
                 die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
                 exit();
+            }
+            return $result;
+        }
+
+        function getById($id) {
+            try {
+                $query = <<<SQL
+                SELECT AL.AlbumId, AL.Title AS title, A.Name as artist, SUM(T.Milliseconds) AS totalPlaytime, GROUP_CONCAT(T.Name SEPARATOR ', ') AS tracks, G.Name AS genre, T.Composer AS composer, SUM(T.Bytes) AS totalFileSize, M.Name AS mediatype, SUM(T.UnitPrice) AS albumPrice  
+                FROM album AL
+                INNER JOIN track T ON T.AlbumId = AL.AlbumId
+                INNER JOIN artist A ON A.ArtistId = AL.ArtistId
+                INNER JOIN genre G ON G.GenreId = T.GenreId
+                INNER JOIN mediatype M ON M.MediaTypeId  = T.MediaTypeId   
+                WHERE AL.AlbumId = ?;           
+SQL;
+        
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+            
+                $result = $stmt->fetch();
+        
+                $this->disconnect();
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+            }
+            return $result;
+        }
+
+        function update($id, $title, $artistId) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                    UPDATE album 
+                    SET Title = ?, ArtistId = ?
+                    WHERE AlbumId = ?
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$title, $artistId, $id]);
+    
+                $affectedRows = $stmt->rowCount();
+                
+                if ($affectedRows == 0) {
+                    $result['isAlbumUpdated'] = false;
+                } else {
+                    $result['isAlbumUpdated'] = true;
+                }
+                $result['affectedRows'] = $affectedRows;
+                $this->disconnect();
+
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
+            }
+                return $result;
+        }
+
+        function delete($id) {
+            $result = array();
+            try {
+                $query = <<<SQL
+                DELETE FROM album WHERE AlbumId = ?;
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+                $deletedRows = $stmt->rowCount();
+                
+                if ($deletedRows == 0) {
+                    $result['isAlbumDeleted'] = false;
+                } else {
+                    $result['isAlbumDeleted'] = true;
+                }
+
+                $result['deletedRows'] = $deletedRows;
+                $this->disconnect();
+
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+                return false;
             }
             return $result;
         }
@@ -87,30 +195,6 @@ SQL;
             return $result;
         }
 
-        function getById($id) {
-            try {
-                $query = <<<SQL
-                SELECT AL.AlbumId, AL.Title AS title, A.Name as artist, SUM(T.Milliseconds) AS totalPlaytime, GROUP_CONCAT(T.Name SEPARATOR ', ') AS tracks, G.Name AS genre, T.Composer AS composer, SUM(T.Bytes) AS totalFileSize, M.Name AS mediatype, SUM(T.UnitPrice) AS albumPrice  
-                FROM album AL
-                INNER JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON A.ArtistId = AL.ArtistId
-                INNER JOIN genre G ON G.GenreId = T.GenreId
-                INNER JOIN mediatype M ON M.MediaTypeId  = T.MediaTypeId   
-                WHERE AL.AlbumId = ?;           
-SQL;
-
-                $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$id]);
-            
-                $result = $stmt->fetch();
-
-                $this->disconnect();
-            } catch (PDOException $e) {
-                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
-                exit();
-            }
-            return $result;
-        }
 
     }
 ?>
