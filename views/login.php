@@ -6,7 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/styles.css"></style>
     <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/functions-general.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>

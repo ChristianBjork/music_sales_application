@@ -41,7 +41,7 @@ SQL;
                 SELECT SQL_CALC_FOUND_ROWS AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.AlbumId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON A.ArtistId = AL.ArtistId
+                LEFT JOIN artist A ON A.ArtistId = AL.ArtistId
                 GROUP BY AL.Title
                 LIMIT $from, $offset;
 SQL;
@@ -76,10 +76,10 @@ SQL;
                 $query = <<<SQL
                 SELECT AL.AlbumId, AL.Title AS title, A.Name as artist, SUM(T.Milliseconds) AS totalPlaytime, GROUP_CONCAT(T.Name SEPARATOR ', ') AS tracks, G.Name AS genre, T.Composer AS composer, SUM(T.Bytes) AS totalFileSize, M.Name AS mediatype, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
-                INNER JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON A.ArtistId = AL.ArtistId
-                INNER JOIN genre G ON G.GenreId = T.GenreId
-                INNER JOIN mediatype M ON M.MediaTypeId  = T.MediaTypeId   
+                LEFT JOIN track T ON T.AlbumId = AL.AlbumId
+                LEFT JOIN artist A ON A.ArtistId = AL.ArtistId
+                LEFT JOIN genre G ON G.GenreId = T.GenreId
+                LEFT JOIN mediatype M ON M.MediaTypeId  = T.MediaTypeId   
                 WHERE AL.AlbumId = ?;           
 SQL;
         
@@ -164,7 +164,7 @@ SQL;
                 SELECT SQL_CALC_FOUND_ROWS AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.TrackId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON A.ArtistId = AL.ArtistId
+                LEFT JOIN artist A ON A.ArtistId = AL.ArtistId
                 WHERE CONCAT_WS('', AL.Title, A.Name) LIKE ?
                 GROUP BY AL.Title        
                 LIMIT $from, $offset;

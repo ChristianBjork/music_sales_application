@@ -10,6 +10,7 @@ function loginToSignup() {
     });
 }
 
+//Validate user login
 function validateLogin() {
     $(".loginUser").click(function() {
         console.log("validate login initiated");
@@ -44,22 +45,22 @@ function validateLogin() {
     });
 }
 
-
+//CREATE New User
 function createUser() {
     $(".createUser").click(function () {
         console.log("CREATE CLICKED");
-        let firstName = $.trim($("#firstName").val());
-        let lastName = $.trim($("#lastName").val());
-        let password = $.trim($("#password").val());
-        let company = $.trim($("#company").val());
-        let address = $.trim($("#address").val());
-        let city = $.trim($("#city").val());
-        let state = $.trim($("#state").val());
-        let country = $.trim($("#country").val());
-        let postalCode = $.trim($("#postalCode").val());
-        let phone = $.trim($("#phone").val());
-        let fax = $.trim($("#fax").val());
-        let email = $.trim($("#email").val());
+        let firstName = $("#firstName").val();
+        let lastName = $("#lastName").val();
+        let password = $("#password").val();
+        let company = $("#company").val();
+        let address = ("#address").val();
+        let city = ("#city").val();
+        let state = ("#state").val();
+        let country = ("#country").val();
+        let postalCode = ("#postalCode").val();
+        let phone = $("#phone").val();
+        let fax = $("#fax").val();
+        let email = $("#email").val();
 
         apiUrl = setApiUrl("user", "create");
         $.ajax({

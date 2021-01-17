@@ -12,11 +12,11 @@ $track = new Track;
 // get posted data
 
 // make sure data is not empty
-if(isset($_GET['searchVal']) && isset($_GET['offset']) && isset($_GET['from'])){
+if(isset($_GET['searchVal'])){
     $searchVal = trim($_GET['searchVal']); 
     $offset = trim($_GET['offset']);
     $from = trim($_GET['from']);
-
+   
     http_response_code(200);
     echo json_encode($track->searchTrack($searchVal, $offset, $from));
 } else{

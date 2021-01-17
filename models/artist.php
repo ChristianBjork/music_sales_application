@@ -42,7 +42,7 @@ SQL;
                 FROM artist A
                 LEFT JOIN album AL ON AL.ArtistId = A.ArtistId
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN genre G ON G.GenreId = T.GenreId
+                LEFT JOIN genre G ON G.GenreId = T.GenreId
                 GROUP BY A.Name
                 LIMIT $from, $offset;
 SQL;
@@ -78,9 +78,9 @@ SQL;
                 $query = <<<SQL
                 SELECT A.ArtistId, A.Name as title, GROUP_CONCAT(DISTINCT(AL.Title) SEPARATOR ', ') AS albums, GROUP_CONCAT(DISTINCT(T.Name) SEPARATOR ', ') AS tracks, G.Name AS genre
                 FROM artist A
-                INNER JOIN album AL ON A.ArtistId = AL.ArtistId
-                INNER JOIN track T ON T.AlbumId = AL.AlbumId
-                INNER JOIN genre G ON G.GenreId = T.GenreId
+                LEFT JOIN album AL ON A.ArtistId = AL.ArtistId
+                LEFT JOIN track T ON T.AlbumId = AL.AlbumId
+                LEFT JOIN genre G ON G.GenreId = T.GenreId
                 WHERE A.ArtistId = ?;           
 SQL;
         
@@ -165,7 +165,7 @@ SQL;
                             FROM artist A
                             LEFT JOIN album AL ON AL.ArtistId = A.ArtistId
                             LEFT JOIN track T ON T.AlbumId = AL.AlbumId
-                            INNER JOIN genre G ON G.GenreId = T.GenreId
+                            LEFT JOIN genre G ON G.GenreId = T.GenreId
                             WHERE CONCAT_WS('', A.Name, G.Name) LIKE ?
                             GROUP BY A.Name
                             LIMIT $from, $offset;";         

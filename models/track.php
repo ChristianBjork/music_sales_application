@@ -41,9 +41,9 @@ SQL;
                 $query = <<<SQL
                 SELECT SQL_CALC_FOUND_ROWS T.TrackId AS trackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
                 FROM track T
-                INNER JOIN album AL ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON AL.ArtistId = A.ArtistId
-                INNER JOIN genre G ON T.GenreId = G.GenreId
+                LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
+                LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
+                LEFT JOIN genre G ON T.GenreId = G.GenreId
                 LIMIT $from, $offset;
 SQL;
                 $stmt = $this->pdo->prepare($query);
@@ -135,10 +135,10 @@ SQL;
                 $query = <<<SQL
                 SELECT TrackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price, T.Composer AS composer, T.Bytes AS fileSize, M.Name AS mediatype 
                 FROM track T
-                INNER JOIN album AL ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON AL.ArtistId = A.ArtistId
-                INNER JOIN genre G ON T.GenreId = G.GenreId
-                INNER JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
+                LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
+                LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
+                LEFT JOIN genre G ON T.GenreId = G.GenreId
+                LEFT JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
                 WHERE T.TrackId = ?;           
 SQL;
                 $stmt = $this->pdo->prepare($query);
@@ -165,9 +165,9 @@ SQL;
                 $query = <<<SQL
                 SELECT SQL_CALC_FOUND_ROWS T.TrackId AS trackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price 
                 FROM track T
-                INNER JOIN album AL ON T.AlbumId = AL.AlbumId
-                INNER JOIN artist A ON AL.ArtistId = A.ArtistId
-                INNER JOIN genre G ON T.GenreId = G.GenreId
+                LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
+                LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
+                LEFT JOIN genre G ON T.GenreId = G.GenreId
                 WHERE CONCAT_WS('', T.TrackId, T.Name, T.Milliseconds, A.Name, AL.Title, G.Name, T.UnitPrice) LIKE ?
                 LIMIT $from, $offset;
 SQL;

@@ -9,7 +9,7 @@ header("Content-Type: application/json; charset=UTF-8");
 require_once('../../models/album.php');
 $album = new Album;
 
-if(isset($_GET['searchVal']) && isset($_GET['offset']) && isset($_GET['from'])){
+if(isset($_GET['searchVal'])){
     $searchVal = trim($_GET['searchVal']); 
     $offset = trim($_GET['offset']);
     $from = trim($_GET['from']);

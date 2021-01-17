@@ -10,7 +10,7 @@ require_once('../../models/artist.php');
 $artist = new Artist;
 
 // make sure data is not empty
-if(isset($_GET['searchVal']) && isset($_GET['offset']) && isset($_GET['from'])){
+if(isset($_GET['searchVal'])){
     $searchVal = trim($_GET['searchVal']); 
     $offset = trim($_GET['offset']);
     $from = trim($_GET['from']);

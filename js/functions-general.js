@@ -2,6 +2,7 @@ let apiUrl;
 const POST = "POST";
 const GET = "GET";
 
+// Setup Tables
 function setupTrackTable(data) {
     let table = ''
     console.log(data[data.length - 1]);
@@ -13,7 +14,7 @@ function setupTrackTable(data) {
                     table += "<td>" + playtime + "</td>";
                     table += "<td>" + trackInfo.artist + "</td>";
                     table += "<td>" + trackInfo.album + "</td>";
-                    table += "<td>" + trackInfo.genre + "</td>";
+                    table += "<td>" + (trackInfo.genre == null ? "Unknown" : trackInfo.genre) + "</td>";
                     table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
                     table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
                     table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
@@ -50,7 +51,7 @@ function setupArtistTable(data){
                     table += "<td>" + artistInfo.artist + "</td>";
                     table += "<td>" + artistInfo.numOfAlbums + "</td>";
                     table += "<td>" + artistInfo.numOfTracks + "</td>";
-                    table += "<td>" + artistInfo.genres + "</td>";
+                    table += "<td>" + (artistInfo.genres == null ? "Unknown" : artistInfo.genres) + "</td>";
             table += "</tr>";
         }
     });
@@ -68,6 +69,7 @@ function updatePagination(maxRows, offset, currentPage){
     $('.pagination-info').html(returnHTML);
 }
 
+// Setup Modals
 function setupTrackModal(data) {
     let playtime = millisecondsToMinutes(data.playtime);
     $("#track-modal-title h3").text(data.title + " - (" + data.artist + ")");
@@ -170,11 +172,11 @@ function setApiUrl(entity, action) {
         case "user":
             switch(action){
                 case "create":
-                    return "api/user/create.php"
+                    return "api/user/create.php";
                 case "validate":
-                    return "api/user/validate.php"
+                    return "api/user/validate.php";
                 case "sign-out":
-                    return "api/user/sign-out.php"
+                    return "api/user/sign-out.php";
             }
             break;
     }

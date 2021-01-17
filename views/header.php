@@ -9,7 +9,7 @@
             <?php
             if($_SESSION['isAdmin'] === 1) {
             ?>
-            <i class="fas fa-plus-square fa-2x" id="add-btn"></i>
+            <i class="fas fa-plus-square fa-2x" id="admin-add-btn"></i>
             <?php
             }
             ?>

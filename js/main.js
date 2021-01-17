@@ -1,17 +1,17 @@
 $(document).ready(function () {
     getTableInfo(0, 1);
-    searchMusic();
+    enableMusicSearch();
     enableModalAction();
     signout();
+    enablePurchase();
 
 });
 
-//Search --------------------
-function searchMusic() {
+//Search music info on select change
+function enableMusicSearch() {
     $("#artist-thead").hide();
     $("#album-thead").hide();
     $("#search").click(function () {
-        console.log("SØG!");
         getTableInfo(0, 1);
     });
 
@@ -34,9 +34,10 @@ function searchMusic() {
     });
 }
 
+//Used for both search & getting all information
 function getTableInfo(from, currentPage) {
     let offset = $(".row-per-page").val();
-    let searchVal = $("#search-val").val();
+    let searchVal = $.trim($("#search-val").val());
     let entity = $.trim($("#search-opt").val());
     let action;
     if (searchVal.length === 0) {
@@ -82,6 +83,12 @@ function getTableInfo(from, currentPage) {
                     break;
             }
             updatePagination(data[data.length - 1], offset, currentPage);
+
+            //Make last table-row unclickable 
+            $('#music-info').on('click', 'td:last-child', function (e) {
+                e.stopPropagation();
+            });
+
         }, failure: function(e) {
             console.log('failure: ' + e);
         }, error: function(e) {
@@ -91,7 +98,7 @@ function getTableInfo(from, currentPage) {
     });
 }
 
-//Sign Out --------------------
+//Sign Out
 function signout() {
     $("#sign-out-btn").on('click', function () {
         console.log("SIGNOUT");
@@ -112,7 +119,7 @@ function signout() {
     });
 }
 
-//Pagination --------------------
+//Pagination 
 $(document).on('click', '.pagination-page-left, .pagination-page-right', function () {
     var i = ($(this).hasClass('pagination-page-left')) ? -1 : 1;
     var newCurrentPage = parseInt($('.current-page').attr('data-current')) + i;
@@ -131,7 +138,7 @@ $(document).on('change', '.show-per-page', function () {
     getTableInfo(0, 1);
 });
 
-//MODAL --------------------
+//MODAL 
 function enableModalAction() {
     $("#music-info").on("click", "tr", function () {
         let trackId = $(this).attr("data-id");
@@ -167,21 +174,35 @@ function enableModalAction() {
         });
     });
 
-
-    $('#music-info').on('click', 'td:last-child', function (e) {
-        e.stopPropagation();
-    });
-
     // When the user clicks on (x), close the modal
     $(".close").on("click", function () {
         $(".modal").hide();
     });
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (e) {
-        var modal = document.getElementById("track-modal");
-        if (e.target == modal) {
-            $("#track-modal").hide();
+    $(window).click(function(e) {
+        var track = document.getElementById("track-modal");
+        var album = document.getElementById("album-modal");
+        var artist = document.getElementById("artist-modal");
+
+        switch(e.target) {
+            case track:
+                $("#track-modal").hide();
+                break;
+            case album:
+                $("#album-modal").hide();
+                break;
+            case artist:
+                $("#artist-modal").hide();
+                break;
+            default:
+                break;
         }
-    }
+    });
+}
+
+function enablePurchase(){
+    $('#music-info').on('click', 'td:last-child', function (e) {
+        console.log("THIS IS GOOOOOD");
+    });
 }
