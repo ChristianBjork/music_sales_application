@@ -47,20 +47,20 @@ function validateLogin() {
 
 //CREATE New User
 function createUser() {
-    $(".createUser").click(function () {
-        console.log("CREATE CLICKED");
-        let firstName = $("#firstName").val();
-        let lastName = $("#lastName").val();
-        let password = $("#password").val();
-        let company = $("#company").val();
-        let address = ("#address").val();
-        let city = ("#city").val();
-        let state = ("#state").val();
-        let country = ("#country").val();
-        let postalCode = ("#postalCode").val();
-        let phone = $("#phone").val();
-        let fax = $("#fax").val();
-        let email = $("#email").val();
+    $('.createUser').click(function () {
+        console.log('CREATE CLICKED');
+        let firstName = $('#firstName').val();
+        let lastName = $('#lastName').val();
+        let password = $('#password').val();
+        let company = $('#company').val();
+        let address = $('#address').val();
+        let city = $('#city').val();
+        let state = $('#state').val();
+        let country = $('#country').val();
+        let postalCode = $('#postalCode').val();
+        let phone = $('#phone').val();
+        let fax = $('#fax').val();
+        let email = $('#email').val();
 
         apiUrl = setApiUrl("user", "create");
         $.ajax({

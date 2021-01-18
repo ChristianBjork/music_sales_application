@@ -4,16 +4,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Music Store</title>
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="js/functions-general.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
-        <script type="text/javascript" src="js/functions-admin.js"></script>
-        <script type="text/javascript" src="js/admin.js"></script>
+        <script type="text/javascript" src="../js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="../js/functions-general.js"></script>
+        <script type="text/javascript" src="../js/main.js"></script>
+        <script type="text/javascript" src="../js/functions-admin.js"></script>
+        <script type="text/javascript" src="../js/admin.js"></script>
     </head>
 <body>
     <?php
+        session_start();
+        include("header.php");
+        if(!isset($_SESSION['userId'])) {
+            header("Location: ../");
+            die();
+        }
+        
         require_once("header.php");
         ?>
     <main>

@@ -52,6 +52,10 @@ header .header-icons i {
   cursor: pointer;
 }
 
+header .header-icons a {
+  color: inherit;
+}
+
 header #admin-add-btn:hover {
   color: #79d67d;
 }

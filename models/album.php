@@ -38,7 +38,7 @@ SQL;
 
             try {
                 $query = <<<SQL
-                SELECT AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.AlbumId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
+                SELECT SQL_CALC_FOUND_ROWS AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.AlbumId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
                 LEFT JOIN artist A ON A.ArtistId = AL.ArtistId

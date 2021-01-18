@@ -15,9 +15,9 @@ function setupTrackTable(data) {
                 table += "<td>" + trackInfo.album + "</td>";
                 table += "<td>" + (trackInfo.genre == null ? "Unknown" : trackInfo.genre) + "</td>";
                 table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
-                table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
+                // table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
                 table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
-                table += "<?php } ?>";
+                // table += "<?php } ?>";
             table += "</tr>";
         }
     });
@@ -26,7 +26,7 @@ function setupTrackTable(data) {
 
 function setupAlbumTable(data){
     let table = '';
-    data.forEach( function(albumInfo, idx, array) {
+    data.forEach(function(albumInfo, idx, array) {
         if (idx !== array.length - 1) {
             table += '<tr data-id="' + albumInfo.albumId + '" id="album">';
                     table += "<td>" + albumInfo.title + "</td>";
@@ -42,7 +42,7 @@ function setupAlbumTable(data){
 
 function setupArtistTable(data){
     let table = '';
-    data.forEach( function(artistInfo, idx, array) {
+    data.forEach(function(artistInfo, idx, array) {
         if (idx !== array.length - 1) {
             table += '<tr data-id="' + artistInfo.artistId + '" id="artist">';
                     table += "<td>" + artistInfo.artist + "</td>";
@@ -69,7 +69,7 @@ function updatePagination(maxRows, offset, currentPage){
 // Setup Modals
 function setupTrackModal(data) {
     let playtime = millisecondsToMinutes(data.playtime);
-    $("#track-modal-title h3").text(data.title + " - (" + data.artist + ")");
+    $("#track-modal-title h3").text(data.name + " - (" + data.artist + ")");
     $("#album").find("p:eq(1)").text(data.album);
     $("#genre").find("p:eq(1)").text(data.genre);
     $("#playTime").find("p:eq(1)").text(playtime);
@@ -132,47 +132,85 @@ function bytesToSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+//Snackbar
+function showSnackbar(){
+    let snackbar = document.getElementById("snackbar");
+    snackbar.className = "show";
+    
+    setTimeout(function(){snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+    
+}
+
+//Sign Out
+function signout() {
+    $('#sign-out-btn').on('click', function () {
+        apiUrl = setApiUrl('user', 'sign-out');
+        $.ajax({
+            url: apiUrl,
+            type: POST,
+            success: function () {
+                window.location.reload();
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
+            }
+        })
+    });
+}
+
 // setting the url for the wanted api within ajax calls
 function setApiUrl(entity, action) {
     switch(entity) {
         case "track":
             switch(action){
                 case "getAll":
-                    return "api/track/getAll.php";
+                    return "../api/track/getAll.php";
                 case 'getById':
-                    return "api/track/getById.php";
+                    return "../api/track/getById.php";
                 case 'search':
-                    return "api/track/search.php";
+                    return "../api/track/search.php";
                 }
             break;
         case "album":
             switch(action){
                 case "getAll":
-                    return "api/album/getAll.php";
+                    return "../api/album/getAll.php";
                 case 'getById':
-                    return "api/album/getById.php";
+                    return "../api/album/getById.php";
                 case 'search':
-                    return "api/album/search.php";
+                    return "../api/album/search.php";
                 }
             break;
         case "artist":
             switch(action){
                 case "getAll":
-                    return "api/artist/getAll.php";
+                    return "../api/artist/getAll.php";
                 case 'getById':
-                    return "api/artist/getById.php";
+                    return "../api/artist/getById.php";
                 case 'search':
-                    return "api/artist/search.php";
+                    return "../api/artist/search.php";
                 }
+            break;
+        case "profile":
+            switch(action){
+                case "getProfile":
+                    return "../api/profile/get-profile.php";
+                case "editProfile":
+                    return "../api/profile/edit-profile.php";
+                case "editPassword":
+                    return "../api/profile/edit-password.php";
+            }
             break;
         case "user":
             switch(action){
                 case "create":
-                    return "api/user/create.php";
+                    return "../api/user/create.php";
                 case "validate":
-                    return "api/user/validate.php";
+                    return "../api/user/validate.php";
                 case "sign-out":
-                    return "api/user/sign-out.php";
+                    return "../api/user/sign-out.php";
             }
             break;
     }

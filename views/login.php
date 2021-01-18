@@ -1,13 +1,21 @@
+<?php
+        session_start();
+        if(isset($_SESSION['userId'])) {
+            header("Location: home.php");
+            die();
+        }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/styles.css"></style>
-    <script type="text/javascript" src="js/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="js/functions-general.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
+    <link rel="stylesheet" href="../css/styles.css"></style>
+    <script type="text/javascript" src="../js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="../js/functions-general.js"></script>
+    <script type="text/javascript" src="../js/login.js"></script>
 </head>
 <body>
     <div class="login-box">

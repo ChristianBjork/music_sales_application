@@ -52,6 +52,7 @@ function getTableInfo(from, currentPage) {
             from: from
         },
         success: function (data) {
+            console.log(data);
             switch (entity) {
                 case 'track':
                     $('#track-thead').show();
@@ -91,24 +92,7 @@ function getTableInfo(from, currentPage) {
     });
 }
 
-//Sign Out
-function signout() {
-    $('#sign-out-btn').on('click', function () {
-        apiUrl = setApiUrl('user', 'sign-out');
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            success: function () {
-                window.location.reload();
-            }, failure: function(e) {
-                console.log('failure: ' + e);
-            }, error: function(e) {
-                console.log('error: ' + e);
-                console.log(JSON.stringify(e));
-            }
-        })
-    });
-}
+
 
 //Pagination 
 $(document).on('click', '.pagination-page-left, .pagination-page-right', function () {
@@ -134,8 +118,7 @@ function enableModalAction() {
     $('#music-info').on('click', 'tr', function () {
         let trackId = $(this).attr('data-id');
         let entity = $(this).attr('id');
-        let action = 'getById';
-        let apiUrl = setApiUrl(entity, action);
+        let apiUrl = setApiUrl(entity, 'getById');
         $.ajax({
             url: apiUrl,
             type: GET,

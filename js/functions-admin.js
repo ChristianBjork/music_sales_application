@@ -176,48 +176,40 @@ function enableDeleteBtn(buttonId, entity) {
     });
 }
 
-//Snackbar
-function showSnackbar(){
-    let snackbar = document.getElementById("snackbar");
-    snackbar.className = "show";
-    
-    setTimeout(function(){snackbar.className = snackbar.className.replace("show", ""); }, 3000);
-    
-}
 // Setting the url for the wanted api within ajax for admin calls
 function setAdminApiUrl(entity, action) {
     switch(entity) {
         case 'track':
             switch(action){
                 case 'create':
-                    return 'api/track/create.php';
+                    return '../api/track/create.php';
                 case 'update':
-                    return 'api/track/update.php';
+                    return '../api/track/update.php';
                 case 'delete':
-                    return 'api/track/delete.php';
+                    return '../api/track/delete.php';
             }
         case "album":
             switch(action){
                 case 'create':
-                    return "api/album/create.php";
+                    return "../api/album/create.php";
                 case 'update':
-                    return "api/album/update.php";
+                    return "../api/album/update.php";
                 case 'delete':
-                    return "api/album/delete.php";
+                    return "../api/album/delete.php";
             }
         case "artist":
             switch(action){
                 case 'create':
-                    return "api/artist/create.php";
+                    return "../api/artist/create.php";
                 case 'update':
-                    return "api/artist/update.php";
+                    return "../api/artist/update.php";
                 case 'delete':
-                    return "api/artist/delete.php";
+                    return "../api/artist/delete.php";
             }
         case "user":
             switch(action){
                 case "create":
-                    return "api/user/create.php";
+                    return "../api/user/create.php";
             }
     }
 }
