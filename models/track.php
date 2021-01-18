@@ -74,6 +74,30 @@ SQL;
             return $result;
         }
 
+        function getById($id) {
+            try {
+                $query = <<<SQL
+                SELECT T.TrackId AS trackId, T.Name AS name, T.Milliseconds AS playtime, A.Name AS artist, T.AlbumId AS albumId, AL.Title AS album, T.genreId AS genreId, G.Name AS genre, T.UnitPrice as price, T.Composer AS composer, T.Bytes AS fileSize, T.mediaTypeId AS mediaTypeId, M.Name AS mediatype 
+                FROM track T
+                LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
+                LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
+                LEFT JOIN genre G ON T.GenreId = G.GenreId
+                LEFT JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
+                WHERE T.TrackId = ?;           
+SQL;
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$id]);
+            
+                $result = $stmt->fetch();
+        
+                $this->disconnect();
+            } catch (PDOException $e) {
+                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
+                exit();
+            }
+            return $result;
+        }
+
         function update($id, $name, $albumId, $mediaTypeId, $genreId, $composer, $milliseconds, $bytes, $unitPrice) {
             $result = array();
             try {
@@ -94,7 +118,7 @@ SQL;
                 }
                 $result['affectedRows'] = $affectedRows;
                 $this->disconnect();
-
+                
             } catch (PDOException $e) {
                 die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
                 exit();
@@ -130,29 +154,6 @@ SQL;
             return $result;
         }
 
-        function getById($id) {
-            try {
-                $query = <<<SQL
-                SELECT TrackId, T.Name AS title, T.Milliseconds AS playtime, A.Name AS artist, AL.Title AS album, G.Name AS genre, T.UnitPrice as price, T.Composer AS composer, T.Bytes AS fileSize, M.Name AS mediatype 
-                FROM track T
-                LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
-                LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
-                LEFT JOIN genre G ON T.GenreId = G.GenreId
-                LEFT JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
-                WHERE T.TrackId = ?;           
-SQL;
-                $stmt = $this->pdo->prepare($query);
-                $stmt->execute([$id]);
-            
-                $result = $stmt->fetch();
-        
-                $this->disconnect();
-            } catch (PDOException $e) {
-                die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
-                exit();
-            }
-            return $result;
-        }
 
         function searchTrack($searchVal, $offset, $from) {
             $search = '%' . $searchVal . '%';

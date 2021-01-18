@@ -38,7 +38,7 @@ SQL;
 
             try {
                 $query = <<<SQL
-                SELECT SQL_CALC_FOUND_ROWS A.ArtistId AS artistId, A.Name AS artist, COUNT(DISTINCT(AL.Title)) AS numOfAlbums, COUNT(T.AlbumId) AS numOfTracks, G.Name AS genres
+                SELECT A.ArtistId AS artistId, A.Name AS artist, COUNT(DISTINCT(AL.Title)) AS numOfAlbums, COUNT(T.AlbumId) AS numOfTracks, G.Name AS genres
                 FROM artist A
                 LEFT JOIN album AL ON AL.ArtistId = A.ArtistId
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
@@ -76,7 +76,7 @@ SQL;
         function getById($id) {
             try {
                 $query = <<<SQL
-                SELECT A.ArtistId, A.Name as title, GROUP_CONCAT(DISTINCT(AL.Title) SEPARATOR ', ') AS albums, GROUP_CONCAT(DISTINCT(T.Name) SEPARATOR ', ') AS tracks, G.Name AS genre
+                SELECT A.ArtistId AS artistId, A.Name as name, GROUP_CONCAT(DISTINCT(AL.Title) SEPARATOR ', ') AS albums, GROUP_CONCAT(DISTINCT(T.Name) SEPARATOR ', ') AS tracks, G.Name AS genre
                 FROM artist A
                 LEFT JOIN album AL ON A.ArtistId = AL.ArtistId
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId

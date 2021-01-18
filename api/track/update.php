@@ -16,7 +16,6 @@ if(
     !empty($data->albumId) &&
     !empty($data->mediaTypeId) &&
     !empty($data->genreId) &&
-    !empty($data->composer) &&
     !empty($data->milliseconds) &&
     !empty($data->bytes) &&
     !empty($data->unitPrice)

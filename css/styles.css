@@ -32,7 +32,7 @@ header .img-title {
 
 header .home-title {
   margin: 15px 0 5px 0px;
-  width: 300px;
+  width: 345px;
 }
 
 #notes-logo {
@@ -308,8 +308,32 @@ tr#artist:last-child td:last-child {
   margin-left: 10px;
 }
 
-/* Snackbar */
+.update-modal-content {
+  display: flex;
+}
 
+.update-modal-content p {
+  font-weight: bold;
+  width: 100px;
+  padding: 10px 10px 10px 0;
+  text-align: left;
+}
+
+#admin-update-modal div h3 {
+  margin-bottom: 15px;
+}
+
+.form .delete-btn {
+  background-color: #e0814b;
+}
+
+.form .delete-btn:hover,
+.form .delete-btn:active,
+.form .delete-btn:focus {
+  background: #ff7a66;
+}
+
+/* Snackbar */
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */

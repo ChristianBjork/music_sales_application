@@ -5,21 +5,20 @@ const GET = "GET";
 // Setup Tables
 function setupTrackTable(data) {
     let table = ''
-    console.log(data[data.length - 1]);
     data.forEach( function(trackInfo, idx, array) {
         if (idx !== array.length - 1) {
             playtime = millisecondsToMinutes(trackInfo.playtime);
             table += '<tr data-id="' + trackInfo.trackId + '" id="track">';
-                    table += "<td>" + trackInfo.title + "</td>";
-                    table += "<td>" + playtime + "</td>";
-                    table += "<td>" + trackInfo.artist + "</td>";
-                    table += "<td>" + trackInfo.album + "</td>";
-                    table += "<td>" + (trackInfo.genre == null ? "Unknown" : trackInfo.genre) + "</td>";
-                    table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
-                    table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
-                    table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
-                    table += "<?php } ?>";
-                table += "</tr>";
+                table += "<td>" + trackInfo.title + "</td>";
+                table += "<td>" + playtime + "</td>";
+                table += "<td>" + trackInfo.artist + "</td>";
+                table += "<td>" + trackInfo.album + "</td>";
+                table += "<td>" + (trackInfo.genre == null ? "Unknown" : trackInfo.genre) + "</td>";
+                table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
+                table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
+                table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
+                table += "<?php } ?>";
+            table += "</tr>";
         }
     });
     $("#music-info-table").find("tbody").html(table);
@@ -27,7 +26,6 @@ function setupTrackTable(data) {
 
 function setupAlbumTable(data){
     let table = '';
-    console.log("DATA: " + data[data.length - 1]);
     data.forEach( function(albumInfo, idx, array) {
         if (idx !== array.length - 1) {
             table += '<tr data-id="' + albumInfo.albumId + '" id="album">';
@@ -44,7 +42,6 @@ function setupAlbumTable(data){
 
 function setupArtistTable(data){
     let table = '';
-    console.log("DATA: " + data[data.length - 1]);
     data.forEach( function(artistInfo, idx, array) {
         if (idx !== array.length - 1) {
             table += '<tr data-id="' + artistInfo.artistId + '" id="artist">';
@@ -97,7 +94,6 @@ function setupAlbumModal(data) {
     $("#album-tracks").find("p:eq(1)").text(data.tracks);
     $("#album-genre").find("p:eq(1)").text(data.genre);
     let playtime = millisecondsToMinutes(data.totalPlaytime);
-    console.log("PLAYTIME: " + playtime);
     $("#album-playTime").find("p:eq(1)").text(playtime);
     if(data.composer == null) {
         $("#album-composer").find("p:eq(0)").text("No composers credited for this album.");  

@@ -1,11 +1,12 @@
 $(document).ready(function(){
-    openAdminAddModal();
+    enableAddModal();
     addNewMusic();
     switchAddModalContent();
+    enableAdminModal();
 });
 
 
-function openAdminAddModal(){
+function enableAddModal(){
     $('#admin-add-btn').on('click', function(){
         console.log("CLICKED");
         $('#admin-add-modal').show();
@@ -17,7 +18,7 @@ function addNewMusic() {
         const entity = $('#add-music-opt').val();
         const action = 'create';
         apiUrl = setAdminApiUrl(entity, action);
-        var data = setCreateData(entity);
+        var data = getCreateData(entity);
         $.ajax({
             url: apiUrl,
             type: POST,
@@ -30,6 +31,7 @@ function addNewMusic() {
                             showSnackbar();
                             $('input[type="text"]').val("");
                             $('#admin-add-modal').hide();
+                            getTableInfo(0, 1);
                         } else {
                             $('div#snackbar').text('Something went wrong, pls try again');
                             showSnackbar();
@@ -41,6 +43,7 @@ function addNewMusic() {
                             showSnackbar();
                             $('input[type="text"]').val("");
                             $('#admin-add-modal').hide();
+                            getTableInfo(0, 1);
                         } else {
                             $('#snackbar').text('Something went wrong, pls try again');
                             showSnackbar();
@@ -52,6 +55,62 @@ function addNewMusic() {
                             showSnackbar();
                             $('input[type="text"]').val("");
                             $('#admin-add-modal').hide();
+                            getTableInfo(0, 1);
+                        } else {
+                            $('div#snackbar').text('Something went wrong, pls try again');
+                            showSnackbar();
+                        }
+                        break;
+                }
+            }
+        });
+    });
+}
+
+//Saving edited music to db
+//Used in enableAdminModal()
+function updateMusic(buttonId, entity) {
+    $(buttonId).on('click', function(){
+        const action = 'update';
+        apiUrl = setAdminApiUrl(entity, action);
+        var data = getUpdateData(entity);
+        $.ajax({
+            url: apiUrl,
+            type: POST,
+            data: data,
+            success: function(data){
+                switch(entity) {
+                    case 'track':
+                        if(data.isTrackUpdated) {
+                            $('div#snackbar').text('Track was successfully updated!');
+                            showSnackbar();
+                            $('input[type="text"]').val("");
+                            $('#admin-update-track-modal').hide();
+                            getTableInfo(0, 1);
+                        } else {
+                            $('div#snackbar').text('Something went wrong, pls try again');
+                            showSnackbar();
+                        }
+                        break;
+                    case 'album':
+                        if(data.isAlbumUpdated) {
+                            $('#snackbar').text('Album was successfully updated!');
+                            showSnackbar();
+                            $('input[type="text"]').val("");
+                            $('#admin-update-album-modal').hide();
+                            getTableInfo(0, 1);
+                        } else {
+                            $('#snackbar').text('Something went wrong, pls try again');
+                            showSnackbar();
+                        }
+                        break;
+                    case 'artist':
+                        if(data.isArtistUpdated) {
+                            $('#snackbar').text('Artist was successfully updated!');
+                            showSnackbar();
+                            $('input[type="text"]').val("");
+                            $('#admin-update-artist-modal').hide();
+                            getTableInfo(0, 1);
                         } else {
                             $('div#snackbar').text('Something went wrong, pls try again');
                             showSnackbar();
@@ -82,5 +141,46 @@ function switchAddModalContent(){
                 $('.artist-modal-add').show();
                 break;
         }
+    });
+}
+
+// Modal for both deleting & Updating
+function enableAdminModal(){
+    $("#music-info").on("click", "tr", function () {
+        let id = $(this).attr("data-id");
+        let entity = $(this).attr("id");
+        let action = 'getById';
+        let apiUrl = setApiUrl(entity, action);
+        $.ajax({
+            url: apiUrl,
+            type: GET,
+            data: {
+                id: id
+            },
+            success: function(data) {
+                switch (entity) {
+                    case "track":
+                        trackModalUpdate(data);
+                        updateMusic('#update-track-btn', entity);
+                        enableDeleteBtn('#delete-track-btn', entity)
+                        break;
+                    case "album":
+                        albumModalUpdate(data);
+                        updateMusic('#update-album-btn', entity);
+                        enableDeleteBtn('#delete-album-btn', entity)
+                        break;
+                    case "artist":
+                        artistModalUpdate(data);
+                        updateMusic('#update-artist-btn', entity);
+                        enableDeleteBtn('#delete-artist-btn', entity)
+                        break;
+                }
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
+            }
+        });
     });
 }

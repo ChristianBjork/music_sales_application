@@ -38,7 +38,7 @@ SQL;
 
             try {
                 $query = <<<SQL
-                SELECT SQL_CALC_FOUND_ROWS AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.AlbumId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
+                SELECT AL.AlbumId AS albumId, AL.Title AS title, A.Name AS artist, COUNT(T.AlbumId) AS numOfTracks, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
                 LEFT JOIN artist A ON A.ArtistId = AL.ArtistId
@@ -74,7 +74,7 @@ SQL;
         function getById($id) {
             try {
                 $query = <<<SQL
-                SELECT AL.AlbumId, AL.Title AS title, A.Name as artist, SUM(T.Milliseconds) AS totalPlaytime, GROUP_CONCAT(T.Name SEPARATOR ', ') AS tracks, G.Name AS genre, T.Composer AS composer, SUM(T.Bytes) AS totalFileSize, M.Name AS mediatype, SUM(T.UnitPrice) AS albumPrice  
+                SELECT AL.AlbumId AS albumId, AL.Title AS title, AL.ArtistId AS artistId, A.Name as artist, SUM(T.Milliseconds) AS totalPlaytime, GROUP_CONCAT(T.Name SEPARATOR ', ') AS tracks, G.Name AS genre, T.Composer AS composer, SUM(T.Bytes) AS totalFileSize, M.Name AS mediatype, SUM(T.UnitPrice) AS albumPrice  
                 FROM album AL
                 LEFT JOIN track T ON T.AlbumId = AL.AlbumId
                 LEFT JOIN artist A ON A.ArtistId = AL.ArtistId
