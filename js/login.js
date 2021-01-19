@@ -29,7 +29,6 @@ function validateLogin() {
                 isAdmin = data.isAdmin;
                 if (data.isValid === true){
                     console.log("TRUE");
-                    //window.location.replace("index.php");
                     window.location.reload();
                   } else {
                     console.log("ALERT");

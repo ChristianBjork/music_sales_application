@@ -120,7 +120,6 @@ SQL;
             } catch (PDOException $e) {
                 die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
                 exit();
-                return false;
             }
                 return $result;
         }
@@ -147,7 +146,6 @@ SQL;
             } catch (PDOException $e) {
                 die('{"status": "error", "connection": "' . $e->getMessage() . '"}');
                 exit();
-                return false;
             }
             return $result;
         }

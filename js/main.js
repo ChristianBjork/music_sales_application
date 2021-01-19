@@ -2,9 +2,8 @@ $(document).ready(function () {
     getTableInfo(0, 1);
     enableMusicSearch();
     enableModalAction();
-    signout();
-    enablePurchase();
-
+    signOut();
+    signIn();
 });
 
 //Search music info on select change
@@ -52,7 +51,6 @@ function getTableInfo(from, currentPage) {
             from: from
         },
         success: function (data) {
-            console.log(data);
             switch (entity) {
                 case 'track':
                     $('#track-thead').show();
@@ -101,7 +99,7 @@ $(document).on('click', '.pagination-page-left, .pagination-page-right', functio
     var offset = $(".row-per-page").val();
     var from = (newCurrentPage - 1) * offset;
 
-    // if ($(this).closest('.pagination').hasClass('pagination-bottom')) $('html, body').scrollTop(0);
+    if ($(this).closest('.pagination').hasClass('pagination-bottom')) $('html, body').scrollTop(0);
 
     getTableInfo(from, newCurrentPage);
 });

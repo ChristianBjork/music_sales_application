@@ -137,7 +137,7 @@ function enableDeleteBtn(buttonId, entity) {
                             $('#admin-update-track-modal').hide();
                             getTableInfo(0, 1);
                         } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
+                            $('div#snackbar').text('Track Cannot be deleted!');
                             showSnackbar();
                         }
                         break;
@@ -149,7 +149,7 @@ function enableDeleteBtn(buttonId, entity) {
                             $('#admin-update-album-modal').hide();
                             getTableInfo(0, 1);
                         } else {
-                            $('#snackbar').text('Something went wrong, pls try again');
+                            $('#snackbar').text('Album Cannot be deleted!');
                             showSnackbar();
                         }
                         break;
@@ -161,7 +161,7 @@ function enableDeleteBtn(buttonId, entity) {
                             $('#admin-update-artist-modal').hide();
                             getTableInfo(0, 1);
                         } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
+                            $('div#snackbar').text('Artist Cannot be deleted!');
                             showSnackbar();
                         }
                         break;
@@ -169,8 +169,7 @@ function enableDeleteBtn(buttonId, entity) {
                 }, failure: function(e) {
                     console.log('failure: ' + e);
                 }, error: function(e) {
-                console.log('error: ' + e);
-                console.log(JSON.stringify(e));
+                console.log('error: ' + JSON.stringify(e));
             }
         });
     });

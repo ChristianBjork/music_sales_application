@@ -2,7 +2,7 @@ $(document).ready(function() {
     getProfile();
     EditUser();
     editPassword();
-    signout();
+    signOut();
 });
 
 function getProfile() {
@@ -81,6 +81,7 @@ function editPassword() {
             }),
             success: function(data){
                 console.log(data);
+                showSnackbar();
             }
         });
     });

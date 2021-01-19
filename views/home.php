@@ -4,23 +4,20 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Music Store</title>
-        <link rel="stylesheet" href="../css/styles.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <script type="text/javascript" src="../js/jquery-3.5.1.js"></script>
         <script type="text/javascript" src="../js/functions-general.js"></script>
         <script type="text/javascript" src="../js/main.js"></script>
         <script type="text/javascript" src="../js/functions-admin.js"></script>
         <script type="text/javascript" src="../js/admin.js"></script>
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
 <body>
     <?php
         session_start();
         include("header.php");
-        if(!isset($_SESSION['userId'])) {
-            header("Location: ../");
-            die();
-        }
-        
+
+        require_once("templates/add-to-cart.php");
         require_once("header.php");
         ?>
     <main>
@@ -80,24 +77,52 @@
                     <th>Genre</th>
                 </tr>
             </thead>
-            <tbody id="music-info">
+                <tbody id="music-info">
                 </tbody>
             </table>
-            <?php if($_SESSION['isAdmin'] === 0) { ?>
-                <div class="modal" id="track-modal">
-                    <div class="modal-content">
-                        <div class="title" id="track-modal-title">
-                            <span class="close"><i class="far fa-times-circle"></i></span>
-                            <h3>Track Title - minutes</h3>
-                        </div>
-                        <div id="album"><p>Album:</p><p></p></div>
-                        <div id="genre"><p>Genre:</p><p></p></div>
-                        <div id="playTime"><p>Playtime:</p><p></p></div>
-                        <div id="composer"><p>Composer:</p><p></p></div>
-                        <div id="mediaType"><p>Media Type:</p><p></p></div>
-                        <div id="fileSize"><p>Size:</p> <p></p></div>
-                    </div>
+            <div class='pagination pagination-bottom'>
+                <div class='search-results-box'>
+                    <p class='search-results'></p>
                 </div>
+                <div class='page-count'>
+                    <div class="show-per-page">
+                        <label>Show per page:</label>
+                        <select class='row-per-page'>
+                            <option value='25'>25</option>
+                            <option value='50'>50</option>
+                            <option value='100'>100</option>
+                            <option value='1000'>1000</option>
+                        </select>
+                    </div>
+                    <div class='pagination-info'></div>
+                </div>
+            </div>
+            
+            <?php if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] === 0) { ?>
+                <form method="POST">
+                    <div class="modal" id="track-modal">
+                        <div class="modal-content">
+                            <div class="title" id="track-modal-title">
+                                <span class="close"><i class="far fa-times-circle"></i></span>
+                                <h3>Track Title - minutes</h3>
+                            </div>
+                            <div id="album"><p>Album:</p><p></p></div>
+                            <div id="genre"><p>Genre:</p><p></p></div>
+                            <div id="playTime"><p>Playtime:</p><p></p></div>
+                            <div id="composer"><p>Composer:</p><p></p></div>
+                            <div id="mediaType"><p>Media Type:</p><p></p></div>
+                            <div id="fileSize"><p>Size:</p> <p></p></div>
+
+                            <input type="hidden" id="hiddenId" name="hidden_id" value="">
+                            <input type="hidden" name="hidden_album" id="hidden_album" value="">
+                            <input type="hidden" name="hidden_genre" id="hidden_genre" value="">
+                            <input type="hidden" name="hidden_composer" id="hidden_composer" value="">
+                            <input type="hidden" name="hidden_price" id="hidden_price" value=""> 
+                            <input type="hidden" name="quantity" value="1"/>
+                            <button type="submit" name="purchase" id="purchase"><p>Purchase</p><p></p></button>
+                        </div>
+                    </div>
+                </form>
                 <div class="modal" id="album-modal">
                     <div class="modal-content">
                         <div class="title" id="album-modal-title">
@@ -124,7 +149,7 @@
                     </div>
                 </div>
         <?php
-            } else if($_SESSION['isAdmin'] === 1) {
+            } else if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === 1) {
                 include_once("templates/admin-modals.php");
             }
             ?>

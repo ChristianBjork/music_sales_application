@@ -15,9 +15,7 @@ function setupTrackTable(data) {
                 table += "<td>" + trackInfo.album + "</td>";
                 table += "<td>" + (trackInfo.genre == null ? "Unknown" : trackInfo.genre) + "</td>";
                 table += "<td>" + (trackInfo.price == null ? "0" : trackInfo.price) + "$</td>";
-                // table +=  "<?php> if(isset($_SESSION['ADMIN'])){?>"
-                table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
-                // table += "<?php } ?>";
+                // table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
             table += "</tr>";
         }
     });
@@ -33,7 +31,7 @@ function setupAlbumTable(data){
                     table += "<td>" + albumInfo.artist + "</td>";
                     table += "<td>" + albumInfo.numOfTracks + "</td>";
                     table += "<td>" + (albumInfo.albumPrice == null ? "0" : albumInfo.albumPrice) + "$</td>";
-                    table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
+                    // table += '<td id="purchase-column"><span><i class="fas fa-shopping-basket" id="purchase-icon"></i></span></td>';
             table += "</tr>";
         }
     });
@@ -57,13 +55,19 @@ function setupArtistTable(data){
 
 function updatePagination(maxRows, offset, currentPage){
     $('.search-results').html(maxRows + ' Results');
-    var totalPages = Math.ceil(maxRows / offset)
+    var totalPages = Math.ceil(maxRows / offset);
     if (totalPages == 0) currentPage = 0;
     var returnHTML = "";
     returnHTML += (currentPage == 1 || currentPage == 0) ? "<p>Page:</p><p class='pagination-page-disable'><i class='fas fa-angle-left'></i></p>" : "<p>Page:</p><p class='pagination-page-left'><i class='fas fa-angle-left'></i></p>";
     returnHTML += "<p class='current-page' data-current='" + currentPage + "' data-total='" + totalPages + "'>" + currentPage + " / " + totalPages + "</p>";
     returnHTML += (currentPage == totalPages) ? "<p class='pagination-page-disable'><i class='fas fa-angle-right'></i></p>" : "<p class='pagination-page-right'><i class='fas fa-angle-right'></i></p>";
     $('.pagination-info').html(returnHTML);
+
+    if(maxRows < 6) {
+        $('.pagination-bottom').hide();
+    } else {
+        $('.pagination-bottom').show();
+    }
 }
 
 // Setup Modals
@@ -85,6 +89,12 @@ function setupTrackModal(data) {
     $("#composer").find("p:eq(1)").text(data.composer);
     let fileSize = bytesToSize(data.fileSize);
     $("#fileSize").find("p:eq(1)").text(fileSize);
+
+    $("#hiddenId").val(data.trackId);
+    $("#hidden_album").val(data.album);
+    $("#hidden_genre").val(data.genre);
+    $("#hidden_composer").val(data.composer);
+    $("#hidden_price").val(data.price);
 
     $("#track-modal").show();
 }
@@ -111,7 +121,7 @@ function setupAlbumModal(data) {
 }
 
 function setupArtistModal(data) {
-    $("#artist-modal-title h3").text(data.title);
+    $("#artist-modal-title h3").text(data.name);
     $("#artist-albums").find("p:eq(1)").text(data.albums);
     $("#artist-tracks").find("p:eq(1)").text(data.tracks);
     $("#artist-genre").find("p:eq(1)").text(data.genre);
@@ -142,7 +152,7 @@ function showSnackbar(){
 }
 
 //Sign Out
-function signout() {
+function signOut() {
     $('#sign-out-btn').on('click', function () {
         apiUrl = setApiUrl('user', 'sign-out');
         $.ajax({
@@ -157,6 +167,13 @@ function signout() {
                 console.log(JSON.stringify(e));
             }
         })
+    });
+}
+
+//Sign Out
+function signIn() {
+    $('#sign-in-btn').on('click', function () {
+        window.location.replace("login.php");
     });
 }
 
@@ -199,8 +216,14 @@ function setApiUrl(entity, action) {
                     return "../api/profile/get-profile.php";
                 case "editProfile":
                     return "../api/profile/edit-profile.php";
-                case "editPassword":
+                case "changePassword":
                     return "../api/profile/edit-password.php";
+            }
+            break;
+        case "purchase":
+            switch(action){
+                case "createInvoice":
+                    return "../api/purchase/create-invoice.php";
             }
             break;
         case "user":

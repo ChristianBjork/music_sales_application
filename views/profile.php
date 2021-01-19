@@ -34,8 +34,8 @@
                 <input type="text" id="fax" placeholder="Fax" />
                 <input type="email" id="email" placeholder="Email address" />
                 <button class="submitEditUser">Edit</button>
-                <input type="text" id="password">
-                <button class="editPassword">Change Password</button>
+                <input type="password" id="password" placeholder="Change Password">
+                <button class="editPassword">Update Password</button>
         </div>
     </div>
     <div id="snackbar">Successfully Updated!</div>
