@@ -24,7 +24,6 @@ function getProfile() {
 
 function EditUser(){
     $(".submitEditUser").click(function() {
-        console.log("Hitting Edit");
         let firstNameChange = $("#firstname").val();
         let lastNameChange = $("#lastname").val();
         let companyChange = $("#company").val();
@@ -36,12 +35,26 @@ function EditUser(){
         let phoneChange = $("#phone").val();
         let faxChange = $("#fax").val();
         let emailChange = $("#email").val();
-        let apiUrl = setApiUrl("profile", "editProfile");
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: JSON.stringify({
-                firstNameChange: firstNameChange,
+        
+        if(
+            firstNameChange.length === 0 || lastNameChange.length === 0 || companyChange.length === 0 ||addressChange.length === 0 || cityChange.length === 0 || 
+            stateChange.length === 0 || countryChange.length === 0 || postalCodeChange.length === 0 || phoneChange.length === 0 || faxChange.length === 0 || emailChange.length === 0 
+        ) {
+            $('div#snackbar').text('Please fill out all fields.');
+            showSnackbar();
+        } else if(
+            !firstNameChange.match($regExInput) || !lastNameChange.match($regExInput) || !companyChange.match($regExInput) || !addressChange.match($regExInput) || !cityChange.match($regExInput) || 
+            !stateChange.match($regExInput) || !countryChange.match($regExInput) || !postalCodeChange.match($regExInput) || !phoneChange.match($regExInput) || !faxChange.match($regExInput)
+        ){
+            $('div#snackbar').text("Please don't hack my application! ;-) ");
+            showSnackbar();
+        } else {
+            let apiUrl = setApiUrl("profile", "editProfile");
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: JSON.stringify({
+                    firstNameChange: firstNameChange,
                 lastNameChange: lastNameChange,
                 companyChange: companyChange,
                 addressChange: addressChange,
@@ -52,38 +65,50 @@ function EditUser(){
                 phoneChange: phoneChange,
                 faxChange: faxChange,
                 emailChange: emailChange
-            }),
-            success: function(data) {
-                if(data.isProfileUpdated){
-                    showSnackbar();
+                }),
+                success: function(data) {
+                    if(data.isProfileUpdated){
+                        $('div#snackbar').text("Successfully Updated!");
+                        showSnackbar();
+                    } else {
+                        $('div#snackbar').text("Something went wrong!");
+                        showSnackbar();
+                    }
+                    
+                }, failure: function(e) {
+                    console.log('failure: ' + e);
+                }, error: function(e) {
+                    console.log('error: ' + e);
+                    console.log(JSON.stringify(e));
                 }
-            }, failure: function(e) {
-                console.log('failure: ' + e);
-            }, error: function(e) {
-                console.log('error: ' + e);
-                console.log(JSON.stringify(e));
-            }
-        });
+            });
+        }
     });
 }
 
 function editPassword() {
     $(".editPassword").click(function() {
-        console.log("hitting password change")
         let password = $("#password").val();
-        console.log(password)
-        let apiUrl = setApiUrl("profile", "changePassword")
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: JSON.stringify ({
-                password: password
-            }),
-            success: function(data){
-                console.log(data);
-                showSnackbar();
-            }
-        });
+        if(password.length === 0){
+            $('div#snackbar').text("Please type your new password.");
+            showSnackbar();
+        } else if(!password.match($regExInput)) {
+            $('div#snackbar').text("Please don't hack my application! ;-)");
+            showSnackbar();
+        }else {
+            let apiUrl = setApiUrl("profile", "changePassword")
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: JSON.stringify ({
+                    password: password
+                }),
+                success: function(data){
+                    $('div#snackbar').text("Successfully Updated!");
+                    showSnackbar();
+                }
+            });
+        }
     });
 }
 

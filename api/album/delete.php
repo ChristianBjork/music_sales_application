@@ -32,3 +32,4 @@ if(!empty($data->id)) {
     // tell the user
     echo json_encode(array("message" => "Unable to delete Album.", "id" => $id));
 }
+?>

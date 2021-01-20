@@ -369,6 +369,10 @@ tbody tr#artist:last-child td:last-child {
   margin-bottom: 15px;
 }
 
+.album-modal-add, .artist-modal-add {
+  display: none;
+}
+
 .form .delete-btn {
   background-color: #e0814b;
 }

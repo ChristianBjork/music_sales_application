@@ -192,7 +192,5 @@ SQL;
             }
             return $result;
         }
-
-
     }
 ?>

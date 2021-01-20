@@ -12,9 +12,13 @@ $artist = new Artist;
 // make sure data is not empty
 if(isset($_GET['searchVal'])){
     $searchVal = trim($_GET['searchVal']); 
-    $offset = trim($_GET['offset']);
-    $from = trim($_GET['from']);
-
+    if(isset($_GET['offset']) && (isset($_GET['from']))) {
+        $from = trim($_GET['from']);
+        $offset = trim($_GET['offset']);
+    } else {
+        $from = 0;
+        $offset = 4000;
+    }
     http_response_code(200);
     echo json_encode($artist->searchArtist($searchVal, $offset, $from));
 } else{

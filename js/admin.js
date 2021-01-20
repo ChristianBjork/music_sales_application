@@ -8,7 +8,6 @@ $(document).ready(function(){
 
 function enableAddModal(){
     $('#admin-add-btn').on('click', function(){
-        console.log("CLICKED");
         $('#admin-add-modal').show();
     })
 }
@@ -17,129 +16,56 @@ function addNewMusic() {
     $('#add-music-btn').on('click', function(){
         const entity = $('#add-music-opt').val();
         const action = 'create';
-        apiUrl = setAdminApiUrl(entity, action);
+        
         var data = getCreateData(entity);
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: data,
-            success: function(data){
-                switch(entity) {
-                    case 'track':
-                        if(data.isTrackCreated) {
-                            $('div#snackbar').text('Track was successfully added!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-add-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
-                    case 'album':
-                        if(data.isAlbumCreated) {
-                            $('#snackbar').text('Album was successfully added!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-add-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
-                    case 'artist':
-                        if(data.isArtistCreated) {
-                            $('#snackbar').text('Artist was successfully added!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-add-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
-                }
-            }
-        });
-    });
-}
 
-//Saving edited music to db
-//Used in enableAdminModal()
-function updateMusic(buttonId, entity) {
-    $(buttonId).on('click', function(){
-        const action = 'update';
-        apiUrl = setAdminApiUrl(entity, action);
-        var data = getUpdateData(entity);
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: data,
-            success: function(data){
-                switch(entity) {
-                    case 'track':
-                        if(data.isTrackUpdated) {
-                            $('div#snackbar').text('Track was successfully updated!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-update-track-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
-                    case 'album':
-                        if(data.isAlbumUpdated) {
-                            $('#snackbar').text('Album was successfully updated!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-update-album-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
-                    case 'artist':
-                        if(data.isArtistUpdated) {
-                            $('#snackbar').text('Artist was successfully updated!');
-                            showSnackbar();
-                            $('input[type="text"]').val("");
-                            $('#admin-update-artist-modal').hide();
-                            getTableInfo(0, 1);
-                        } else {
-                            $('div#snackbar').text('Something went wrong, pls try again');
-                            showSnackbar();
-                        }
-                        break;
+        if(data != false) {
+            apiUrl = setAdminApiUrl(entity, action);
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: data,
+                success: function(data){
+                    switch(entity) {
+                        case 'track':
+                            if(data.isTrackCreated) {
+                                $('div#snackbar').text('Track was successfully added!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-add-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('div#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                        case 'album':
+                            if(data.isAlbumCreated) {
+                                $('#snackbar').text('Album was successfully added!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-add-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                        case 'artist':
+                            if(data.isArtistCreated) {
+                                $('#snackbar').text('Artist was successfully added!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-add-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('div#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                    }
                 }
-            }
-        });
-    });
-}
-
-function switchAddModalContent(){
-    $("#add-music-opt").on('change', function () {
-        switch(this.value) {
-            case 'track':
-                $('.track-modal-add').show();
-                $('.album-modal-add').hide();
-                $('.artist-modal-add').hide();
-                break;
-            case 'album':
-                $('.track-modal-add').hide();
-                $('.album-modal-add').show();
-                $('.artist-modal-add').hide();
-                break;
-            case 'artist':
-                $('.track-modal-add').hide();
-                $('.album-modal-add').hide();
-                $('.artist-modal-add').show();
-                break;
+            });
         }
     });
 }
@@ -177,10 +103,96 @@ function enableAdminModal(){
                 }
             }, failure: function(e) {
                 console.log('failure: ' + e);
+                $('#snackbar').text('Something went wrong, pls try again');
+                showSnackbar();
             }, error: function(e) {
                 console.log('error: ' + e);
                 console.log(JSON.stringify(e));
+                $('#snackbar').text('Something went wrong, pls try again');
+                showSnackbar();
             }
         });
     });
 }
+
+//Saving edited music to db
+//Used in enableAdminModal()
+function updateMusic(buttonId, entity) {
+    $(buttonId).on('click', function(){
+        const action = 'update';
+        apiUrl = setAdminApiUrl(entity, action);
+        var data = getUpdateData(entity);
+
+        if(data != false) {
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: data,
+                success: function(data){
+                    switch(entity) {
+                        case 'track':
+                            if(data.isTrackUpdated) {
+                                $('div#snackbar').text('Track was successfully updated!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-update-track-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('div#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                        case 'album':
+                            if(data.isAlbumUpdated) {
+                                $('#snackbar').text('Album was successfully updated!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-update-album-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                        case 'artist':
+                            if(data.isArtistUpdated) {
+                                $('#snackbar').text('Artist was successfully updated!');
+                                showSnackbar();
+                                $('input[type="text"]').val("");
+                                $('#admin-update-artist-modal').hide();
+                                getTableInfo(0, 1);
+                            } else {
+                                $('div#snackbar').text('Something went wrong, pls try again');
+                                showSnackbar();
+                            }
+                            break;
+                    }
+                }
+            });
+        }
+    });
+}
+
+function switchAddModalContent(){
+    $("#add-music-opt").on('change', function () {
+        switch(this.value) {
+            case 'track':
+                $('.track-modal-add').show();
+                $('.album-modal-add').hide();
+                $('.artist-modal-add').hide();
+                break;
+            case 'album':
+                $('.track-modal-add').hide();
+                $('.album-modal-add').show();
+                $('.artist-modal-add').hide();
+                break;
+            case 'artist':
+                $('.track-modal-add').hide();
+                $('.album-modal-add').hide();
+                $('.artist-modal-add').show();
+                break;
+        }
+    });
+}
+
+

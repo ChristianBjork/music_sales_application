@@ -30,3 +30,4 @@ if(!empty($id)) {
     // tell the user
     echo json_encode(array("message" => "Unable to delete Track.", "id" => $id));
 }
+?>

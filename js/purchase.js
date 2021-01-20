@@ -26,28 +26,35 @@ function createInvoice(){
         let billingCountry = $('#billingCountry').val();
         let billingPostalCode = $('#billingPostalCode').val();
         
-        //var today = new DATE().ToLocaleString();
-    // var dateTime = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
-        let date = new Date().toJSON().slice(0, 19).replace('T', ' '); 
-        let price = $('#finalPrice').val();
-        console.log(billingAddress, billingCity, billingCountry, billingPostalCode, billingState, date, price);
-        let apiUrl = setApiUrl('purchase', 'createInvoice');
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: JSON.stringify( {
-                date: date,
-                billingAddress: billingAddress,
-                billingCity: billingCity,
-                billingState: billingState,
-                billingCountry: billingCountry,
-                billingPostalCode: billingPostalCode,
-                price: price
-            }),
-            success: function(data) {
-                console.log(data);
-            }
-        });
+        if(
+            billingAddress.length === 0 || billingCity.length === 0 || billingState.length === 0 ||billingCountry.length === 0 || billingPostalCode.length === 0 
+        ) {
+            $('div#snackbar').text('Please fill out all fields.');
+            showSnackbar();
+        } else if(
+            !billingAddress.match($regExInput) || !billingCity.match($regExInput) || !billingState.match($regExInput) || !billingCountry.match($regExInput) || !billingPostalCode.match($regExInput) 
+        ){
+            $('div#snackbar').text("Please don't hack my application! ;-) ");
+            showSnackbar();
+        } else {
+            let price = $('#finalPrice').val();
+            let apiUrl = setApiUrl('purchase', 'createInvoice');
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: JSON.stringify( {
+                    billingAddress: billingAddress,
+                    billingCity: billingCity,
+                    billingState: billingState,
+                    billingCountry: billingCountry,
+                    billingPostalCode: billingPostalCode,
+                    price: price
+                }),
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+        }
     });
 }
 

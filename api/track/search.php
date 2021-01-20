@@ -9,13 +9,17 @@ header("Content-Type: application/json; charset=UTF-8");
 require_once('../../models/track.php');
 $track = new Track;
 
-// get posted data
-
 // make sure data is not empty
 if(isset($_GET['searchVal'])){
     $searchVal = trim($_GET['searchVal']); 
-    $offset = trim($_GET['offset']);
-    $from = trim($_GET['from']);
+    if(isset($_GET['from']) || (isset($_GET['offset']))) {
+        $from = trim($_GET['from']);
+        $offset = trim($_GET['offset']);
+    } else {
+        $from = 0;
+        $offset = 4000;
+    }
+    
    
     http_response_code(200);
     echo json_encode($track->searchTrack($searchVal, $offset, $from));

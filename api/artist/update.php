@@ -6,6 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 
+// if($_SESSION['isAdmin']){
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
@@ -34,4 +35,5 @@ if(!empty($data->id) && !empty($data->name)){
     // tell the user
     echo json_encode(array("message" => "Unable to get Create Artist"));
 }
+// }
 ?>

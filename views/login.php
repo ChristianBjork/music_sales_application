@@ -21,24 +21,24 @@
     <div class="login-box">
         <div class="form">
             <form class="register-form">
-                <input type="text" id="firstName" placeholder="First name" />
-                <input type="text" id="lastName" placeholder="Last name" />
-                <input type="password" id="password" placeholder="Password" />
-                <input type="text" id="company" placeholder="Company" />
-                <input type="text" id="address" placeholder="Address" />
-                <input type="text" id="city" placeholder="City" />
-                <input type="text" id="state" placeholder="State" />
-                <input type="text" id="country" placeholder="Country" />
-                <input type="zip" id="postalCode" placeholder="Postal Code" />
-                <input type="tel" id="phone" placeholder="Phone" />
-                <input type="text" id="fax" placeholder="Fax" />
-                <input type="email" id="email" placeholder="Email address" />
+                <input type="text" id="firstName" placeholder="First name" required/>
+                <input type="text" id="lastName" placeholder="Last name" required/>
+                <input type="password" id="password" placeholder="Password" required/>
+                <input type="text" id="company" placeholder="Company" required/>
+                <input type="text" id="address" placeholder="Address" required/>
+                <input type="text" id="city" placeholder="City" required/>
+                <input type="text" id="state" placeholder="State" required/>
+                <input type="text" id="country" placeholder="Country" required/>
+                <input type="zip" id="postalCode" placeholder="Postal Code" required/>
+                <input type="tel" id="phone" placeholder="Phone" required/>
+                <input type="text" id="fax" placeholder="Fax" required/>
+                <input type="email" id="email" placeholder="Email address" required/>
                 <button class="createUser">create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form">
-                <input id="loginEmail" type="email" placeholder="Email"/>
-                <input id="loginPassword" type="password" placeholder="Password"/>
+                <input id="loginEmail" type="email" placeholder="Email" required/>
+                <input id="loginPassword" type="password" placeholder="Password" required/>
                 <button class="loginUser">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>

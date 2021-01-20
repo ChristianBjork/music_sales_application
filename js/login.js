@@ -12,35 +12,39 @@ function loginToSignup() {
 
 //Validate user login
 function validateLogin() {
-    $(".loginUser").click(function() {
-        console.log("validate login initiated");
-        let email = $.trim($("#loginEmail").val());
-        let password = $.trim($("#loginPassword").val());
-        apiUrl = setApiUrl("user", "validate");
-        $.ajax({
-            url: apiUrl,
-            type: GET,
-            data: {
-                email: email,
-                password: password
-            },
-            success: function(data){
-                console.log(data);
-                isAdmin = data.isAdmin;
-                if (data.isValid === true){
-                    console.log("TRUE");
-                    window.location.reload();
-                  } else {
-                    console.log("ALERT");
-                    alert("Login credentials incorrect");
-                  }
-            }, failure: function(e) {
-                console.log('failure: ' + e);
-            }, error: function(e) {
-                console.log('error: ' + e);
-                console.log(JSON.stringify(e));
-            }
-        });
+    $('.loginUser').click(function() {
+        let email = $.trim($('#loginEmail').val());
+        let password = $.trim($('#loginPassword').val());
+
+        if(email.length === 0  || password.length === 0){
+            alert('Fields "Email" & "Password" are required');
+        } else if(!password.match($regExInput)) {
+            alert("Please don't try to hack my application! ;-)");
+        }else {
+            apiUrl = setApiUrl('user', 'validate');
+            $.ajax({
+                url: apiUrl,
+                type: GET,
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data){
+                    console.log(data);
+                    isAdmin = data.isAdmin;
+                    if (data.isValid === true){
+                        window.location.reload();
+                    } else {
+                        alert('Login credentials incorrect');
+                    }
+                }, failure: function(e) {
+                    console.log('failure: ' + e);
+                }, error: function(e) {
+                    console.log('error: ' + e);
+                    console.log(JSON.stringify(e));
+                }
+            });
+        }
     });
 }
 

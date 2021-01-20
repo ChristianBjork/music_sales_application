@@ -44,6 +44,7 @@ SQL;
                 LEFT JOIN album AL ON T.AlbumId = AL.AlbumId
                 LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
                 LEFT JOIN genre G ON T.GenreId = G.GenreId
+                ORDER BY A.Name ASC
                 LIMIT $from, $offset;
 SQL;
                 $stmt = $this->pdo->prepare($query);
@@ -83,7 +84,8 @@ SQL;
                 LEFT JOIN artist A ON AL.ArtistId = A.ArtistId
                 LEFT JOIN genre G ON T.GenreId = G.GenreId
                 LEFT JOIN mediatype M ON T.MediaTypeId = M.MediaTypeId     
-                WHERE T.TrackId = ?;           
+                WHERE T.TrackId = ?
+                ORDER BY A.Name ASC;           
 SQL;
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$id]);
@@ -152,7 +154,6 @@ SQL;
             return $result;
         }
 
-
         function searchTrack($searchVal, $offset, $from) {
             $search = '%' . $searchVal . '%';
             $offset = (int)$offset;
@@ -198,6 +199,5 @@ SQL;
             
             return $result;
         }
-
     }
 ?>

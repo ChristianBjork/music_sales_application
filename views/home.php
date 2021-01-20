@@ -15,10 +15,9 @@
 <body>
     <?php
         session_start();
-        include("header.php");
 
         require_once("templates/add-to-cart.php");
-        require_once("header.php");
+        require_once("templates/header.php");
         ?>
     <main>
         <div class="flex-title">
@@ -80,18 +79,18 @@
                 <tbody id="music-info">
                 </tbody>
             </table>
-            <div class='pagination pagination-bottom'>
-                <div class='search-results-box'>
-                    <p class='search-results'></p>
+            <div class="pagination pagination-bottom">
+                <div class="search-results-box">
+                    <p class="search-results"></p>
                 </div>
-                <div class='page-count'>
+                <div class="page-count">
                     <div class="show-per-page">
                         <label>Show per page:</label>
-                        <select class='row-per-page'>
-                            <option value='25'>25</option>
-                            <option value='50'>50</option>
-                            <option value='100'>100</option>
-                            <option value='1000'>1000</option>
+                        <select class="row-per-page ">
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="1000">1000</option>
                         </select>
                     </div>
                     <div class='pagination-info'></div>

@@ -12,7 +12,8 @@
 <body>
     <?php 
         session_start();
-        include("header.php");
+        include("templates/header.php");
+        // Deleting items & whole cookies 
         if(isset($_GET["action"])){
             if($_GET["action"] == "delete") {
                 $cookie_data = stripslashes($_COOKIE["shopping_cart"]);
@@ -53,7 +54,6 @@
     foreach($cart_data as $keys => $values)
         {
     ?>
-        
             <tr>
                 <td><?php echo $values["item_album"]; ?></td>
                 <td><?php echo $values["item_genre"]; ?></td>
@@ -64,16 +64,14 @@
                 <td id="remove-from-cart"><a href="purchase.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span><i class="far fa-trash-alt"></i></span></a></td>
             </tr>
         <?php
-            $total = $total + ($values["item_quantity"] * $values["item_price"]);
+
+        $total = $total + ($values["item_quantity"] * $values["item_price"]);
         }
         ?>
         </tbody>
-
         <?php 
         } else {
-            echo '<tr>
-                    <td>No Item in Cart</td>
-                    </tr>';
+            $total = 0;
         }
         ?>
     </table>

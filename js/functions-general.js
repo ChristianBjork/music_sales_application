@@ -1,6 +1,9 @@
+//Globals
 let apiUrl;
 const POST = "POST";
 const GET = "GET";
+const $regExInput = /^[A-Za-z0-9_ ]*$/;
+   
 
 // Setup Tables
 function setupTrackTable(data) {

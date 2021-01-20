@@ -1,32 +1,92 @@
+//Globals for admin
+const $regExInputAdmin = /^[A-Za-z0-9.,/_ ]*$/;
+
 // Based on what is selected, this function returns the correct data, which will be created in the db
 function getCreateData(entity){
     var data;
     switch(entity){
         case 'track':
-            data = JSON.stringify({
-                name: $('#add-track-name').val(),
-                albumId: $('#add-track-albumId').val(),
-                mediaTypeId : $('#add-track-mediaTypeId').val() ,
-                genreId: $('#add-track-genreId').val(),
-                composer: $('#add-track-composer').val(),
-                milliseconds: $('#add-track-milliseconds').val(),
-                bytes: $('#add-track-bytes').val(),
-                unitPrice: $('#add-track-unitPrice').val()
-            });
-            return data;
-        case 'album':
-            data = JSON.stringify({
-                title: $('#add-album-title').val(),
-                artistId: $('#add-album-artistId').val()
-            });
-            return data;
+            let name = $('#add-track-name').val();
+            let albumId = $('#add-track-albumId').val();
+            let mediaTypeId = $('#add-track-mediaTypeId').val();
+            let genreId = $('#add-track-genreId').val();
+            let composer = $('#add-track-composer').val();
+            let milliseconds = $('#add-track-milliseconds').val();
+            let bytes = $('#add-track-bytes').val();
+            let unitPrice = $('#add-track-unitPrice').val();
 
+            if(
+                name.length === 0 || albumId.length === 0 || mediaTypeId.length === 0 || genreId.length === 0 || composer.length === 0 || 
+                milliseconds.length === 0 || bytes.length === 0 || unitPrice.length === 0
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !name.match($regExInputAdmin) || !albumId.match($regExInputAdmin) || !mediaTypeId.match($regExInputAdmin) || !genreId.match($regExInputAdmin) || !composer.match($regExInputAdmin) || 
+                !milliseconds.match($regExInputAdmin) || !bytes.match($regExInputAdmin) || !unitPrice.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    name: name,
+                    albumId: albumId,
+                    mediaTypeId : mediaTypeId,
+                    genreId: genreId,
+                    composer: composer,
+                    milliseconds: milliseconds,
+                    bytes: bytes,
+                    unitPrice: unitPrice
+                });
+                return data;
+            }
+        case 'album':
+            let title = $('#add-album-title').val();
+            let artistId = $('#add-album-artistId').val();
+
+            if(
+                title.length === 0 || artistId.length === 0 
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !title.match($regExInputAdmin) || !artistId.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    title: title,
+                    artistId: artistId
+                });
+                return data;
+            }
         case 'artist':
-            data = JSON.stringify({
-                name: $('#add-artist-name').val()
-            });
-            return data;
-    }
+            let artistName = $('#add-artist-name').val();
+
+            if(
+                artistName.length === 0
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !artistName.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    name: artistName
+                });
+                return data;
+            }
+        }
 }
 
 // Based on what is selected, this function returns the correct data, which will be updated in the db
@@ -34,31 +94,89 @@ function getUpdateData(entity){
     var data;
     switch(entity){
         case 'track':
-            data = JSON.stringify({
-                id: $('#update-trackId').attr('data-id'),
-                name: $('#update-track-name').val(),
-                albumId: $('#update-track-albumId').val(),
-                mediaTypeId : $('#update-track-mediaTypeId').val() ,
-                genreId: $('#update-track-genreId').val(),
-                composer: $('#update-track-composer').val(),
-                milliseconds: $('#update-track-milliseconds').val(),
-                bytes: $('#update-track-bytes').val(),
-                unitPrice: $('#update-track-unitPrice').val()
-            });
-            return data;
+            let name = $('#update-track-name').val();
+            let albumId = $('#update-track-albumId').val();
+            let mediaTypeId = $('#update-track-mediaTypeId').val();
+            let genreId = $('#update-track-genreId').val();
+            let composer = $('#update-track-composer').val();
+            let milliseconds = $('#update-track-milliseconds').val();
+            let bytes = $('#update-track-bytes').val();
+            let unitPrice = $('#update-track-unitPrice').val();
+
+            if(
+                name.length === 0 || albumId.length === 0 || mediaTypeId.length === 0 || genreId.length === 0 || composer.length === 0 || 
+                milliseconds.length === 0 || bytes.length === 0 || unitPrice.length === 0
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !name.match($regExInputAdmin) || !albumId.match($regExInputAdmin) || !mediaTypeId.match($regExInputAdmin) || !genreId.match($regExInputAdmin) || !composer.match($regExInputAdmin) || 
+                !milliseconds.match($regExInputAdmin) || !bytes.match($regExInputAdmin) || !unitPrice.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    id: $('#update-trackId').attr('data-id'),
+                    name: name,
+                    albumId: albumId,
+                    mediaTypeId : mediaTypeId,
+                    genreId: genreId,
+                    composer: composer,
+                    milliseconds: milliseconds,
+                    bytes: bytes,
+                    unitPrice: unitPrice
+                });
+                return data;
+            }
         case 'album':
-            data = JSON.stringify({
-                id: $('#update-albumId').attr('data-id'),
-                title: $('#update-album-title').val(),
-                artistId: $('#update-album-artistId').val()
-            });
-            return data;
+            let title = $('#update-album-title').val();
+            let artistId = $('#update-album-artistId').val();
+
+            if(
+                title.length === 0 || artistId.length === 0 
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !title.match($regExInputAdmin) || !artistId.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    id: $('#update-albumId').attr('data-id'),
+                    title: title,
+                    artistId: artistId
+                });
+                return data;
+            }
         case 'artist':
-            data = JSON.stringify({
-                id: $('#update-artistId').attr('data-id'),
-                name: $('#update-artist-name').val()
-            });
-            return data;
+            let artistName = $('#update-artist-name').val();
+
+            if(
+                artistName.length === 0
+            ) {
+                $('div#snackbar').text('Please fill out all fields.');
+                showSnackbar();
+                return false;
+            } else if(
+                !artistName.match($regExInputAdmin)
+            ){
+                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                showSnackbar();
+                return false;
+            } else {
+                data = JSON.stringify({
+                    id: $('#update-artistId').attr('data-id'),
+                    name: artistName
+                });
+                return data;
+            }
     }
 }
 

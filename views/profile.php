@@ -12,7 +12,7 @@
 <body>
 <?php
     session_start();
-    include("header.php");
+    include("templates/header.php");
     if(!isset($_SESSION['userId'])) {
         header("Location: ../");
         die();
@@ -22,20 +22,20 @@
 <main>
     <div class="editCustomer">
         <div class="form">
-                <input type="text" id="firstname" placeholder="First name" />
-                <input type="text" id="lastname" placeholder="Last name" />
-                <input type="text" id="company" placeholder="Company" />
-                <input type="text" id="address" placeholder="Address" />
-                <input type="text" id="city" placeholder="City" />
-                <input type="text" id="state" placeholder="State" />
-                <input type="text" id="country" placeholder="Country" />
-                <input type="zip" id="postalcode" placeholder="Postal Code" />
-                <input type="tel" id="phone" placeholder="Phone" />
-                <input type="text" id="fax" placeholder="Fax" />
-                <input type="email" id="email" placeholder="Email address" />
-                <button class="submitEditUser">Edit</button>
-                <input type="password" id="password" placeholder="Change Password">
-                <button class="editPassword">Update Password</button>
+            <input type="text" id="firstname" placeholder="First name" required/>
+            <input type="text" id="lastname" placeholder="Last name" required/>
+            <input type="text" id="company" placeholder="Company" required/>
+            <input type="text" id="address" placeholder="Address" required/>
+            <input type="text" id="city" placeholder="City" required/>
+            <input type="text" id="state" placeholder="State" required/>
+            <input type="text" id="country" placeholder="Country" required/>
+            <input type="zip" id="postalcode" placeholder="Postal Code" required/>
+            <input type="tel" id="phone" placeholder="Phone" required/>
+            <input type="text" id="fax" placeholder="Fax" required/>
+            <input type="email" id="email" placeholder="Email address" required/>
+            <button class="submitEditUser">Edit</button>
+            <input type="password" id="password" placeholder="Change Password">
+            <button class="editPassword">Update Password</button>
         </div>
     </div>
     <div id="snackbar">Successfully Updated!</div>

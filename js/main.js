@@ -105,8 +105,8 @@ $(document).on('click', '.pagination-page-left, .pagination-page-right', functio
 });
 
 //Update number of rows
-$(document).on('change', '.show-per-page', function () {
-    $('.navigator-number').val($(this).val());
+$(document).on('change', '.row-per-page', function () {
+    $('.row-per-page').val($(this).val());
     if ($(this).closest('.pagination').hasClass('pagination-bottom')) $('html, body').scrollTop(0);
     getTableInfo(0, 1);
 });

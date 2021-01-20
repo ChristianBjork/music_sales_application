@@ -9,10 +9,16 @@ header("Content-Type: application/json; charset=UTF-8");
 require_once('../../models/artist.php');
 $artist = new Artist;
 
-// make sure data is not empty
-if(isset($_GET['offset']) && isset($_GET['from'])){
-    $offset = trim($_GET['offset']);
+if(isset($_GET['offset']) && (isset($_GET['from']))) {
     $from = trim($_GET['from']);
+    $offset = trim($_GET['offset']);
+} else {
+    $from = 0;
+    $offset = 4000;
+}
+
+// make sure data is not empty
+if(!empty($offset) && $from >= 0){
 
     http_response_code(200);
     echo json_encode($artist->getAll($offset, $from));
