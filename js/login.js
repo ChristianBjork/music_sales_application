@@ -19,7 +19,7 @@ function validateLogin() {
         if(email.length === 0  || password.length === 0){
             alert('Fields "Email" & "Password" are required');
         } else if(!password.match($regExInput)) {
-            alert("Please don't try to hack my application! ;-)");
+            alert("Please enter valid input data.");
         }else {
             apiUrl = setApiUrl('user', 'validate');
             $.ajax({
@@ -66,15 +66,15 @@ function createUser() {
         let email = $('#email').val();
 
         if(
-            firstName.length === 0  || lastName.length === 0 || email.length === 0  || company.length === 0 || address.length === 0  || city.length === 0 || 
+            firstName.length === 0  || lastName.length === 0 || password.length === 0  || company.length === 0 || address.length === 0  || city.length === 0 || 
             state.length === 0  || country.length === 0 || postalCode.length === 0  || phone.length === 0 || fax.length === 0  || email.length === 0
             ){
             alert('Fields "Email" & "Password" are required');
         } else if(
-            !firstName.match($regExInput) || !lastName.match($regExInput) || !email.match($regExInput) || !company.match($regExInput) || !address.match($regExInput) || !city.match($regExInput) || 
-            !state.match($regExInput) || !country.match($regExInput) || !postalCode.match($regExInput) || !phone.match($regExInput) || !fax.match($regExInput) || !email.match($regExInput)
+            !firstName.match($regExInput) || !lastName.match($regExInput) || !password.match($regExInput) || !company.match($regExInput)  || !city.match($regExInput) || 
+            !state.match($regExInput) || !country.match($regExInput) || !postalCode.match($regExInput) || !phone.match($regExInput) || !fax.match($regExInput)
         ) {
-            alert("Please don't try to hack my application! ;-)");
+            alert("Please enter valid input data.");
         }else {
 
             apiUrl = setApiUrl("user", "create");
@@ -96,6 +96,7 @@ function createUser() {
                     email: email
                 }), 
                 success: function(data){
+                    console.log(data);
                     if(data.isUserCreated == true) {
                         $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
                     } else {

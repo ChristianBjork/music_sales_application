@@ -26,7 +26,7 @@ function getCreateData(entity){
                 !name.match($regExInputAdmin) || !albumId.match($regExInputAdmin) || !mediaTypeId.match($regExInputAdmin) || !genreId.match($regExInputAdmin) || !composer.match($regExInputAdmin) || 
                 !milliseconds.match($regExInputAdmin) || !bytes.match($regExInputAdmin) || !unitPrice.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {
@@ -55,7 +55,7 @@ function getCreateData(entity){
             } else if(
                 !title.match($regExInputAdmin) || !artistId.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {
@@ -77,7 +77,7 @@ function getCreateData(entity){
             } else if(
                 !artistName.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {
@@ -114,7 +114,7 @@ function getUpdateData(entity){
                 !name.match($regExInputAdmin) || !albumId.match($regExInputAdmin) || !mediaTypeId.match($regExInputAdmin) || !genreId.match($regExInputAdmin) || !composer.match($regExInputAdmin) || 
                 !milliseconds.match($regExInputAdmin) || !bytes.match($regExInputAdmin) || !unitPrice.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {
@@ -144,7 +144,7 @@ function getUpdateData(entity){
             } else if(
                 !title.match($regExInputAdmin) || !artistId.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {
@@ -167,7 +167,7 @@ function getUpdateData(entity){
             } else if(
                 !artistName.match($regExInputAdmin)
             ){
-                $('div#snackbar').text("Please don't hack my application! ;-) ");
+                $('div#snackbar').text("Please enter valid input data.");
                 showSnackbar();
                 return false;
             } else {

@@ -41,6 +41,7 @@ function getTableInfo(from, currentPage) {
     } else {
         action = 'search';
     }
+    
     if(!searchVal.match($regExInput)) {
         $('div#snackbar').text("Please don't hack my application! ;-) ");
         showSnackbar();

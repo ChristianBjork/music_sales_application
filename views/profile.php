@@ -22,19 +22,52 @@
 <main>
     <div class="editCustomer">
         <div class="form">
-            <input type="text" id="firstname" placeholder="First name" required/>
-            <input type="text" id="lastname" placeholder="Last name" required/>
-            <input type="text" id="company" placeholder="Company" required/>
-            <input type="text" id="address" placeholder="Address" required/>
-            <input type="text" id="city" placeholder="City" required/>
-            <input type="text" id="state" placeholder="State" required/>
-            <input type="text" id="country" placeholder="Country" required/>
-            <input type="zip" id="postalcode" placeholder="Postal Code" required/>
-            <input type="tel" id="phone" placeholder="Phone" required/>
-            <input type="text" id="fax" placeholder="Fax" required/>
-            <input type="email" id="email" placeholder="Email address" required/>
-            <button class="submitEditUser">Edit</button>
-            <input type="password" id="password" placeholder="Change Password">
+            <div class="update-modal-content">
+                <p>Firstname</p>
+                <input type="text" id="firstname" placeholder="First name" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Lastname</p>
+                <input type="text" id="lastname" placeholder="Last name" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Company</p>
+                <input type="text" id="company" placeholder="Company" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Address</p>
+                <input type="text" id="address" placeholder="Address" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>City</p>
+                <input type="text" id="city" placeholder="City" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>State</p>
+                <input type="text" id="state" placeholder="State" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Country</p>
+                <input type="text" id="country" placeholder="Country" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Postalcode</p>
+                <input type="zip" id="postalcode" placeholder="Postal Code" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Phone</p>
+                <input type="tel" id="phone" placeholder="Phone" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Fax</p>
+                <input type="text" id="fax" placeholder="Fax" required/>
+            </div>
+            <div class="update-modal-content">
+                <p>Email</p>
+                <input type="email" id="email" placeholder="Email address" required/>
+            </div>
+                <button class="submitEditUser">Edit</button>
+                <input type="password" id="password" placeholder="Change Password">
             <button class="editPassword">Update Password</button>
         </div>
     </div>
