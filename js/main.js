@@ -41,53 +41,58 @@ function getTableInfo(from, currentPage) {
     } else {
         action = 'search';
     }
-    apiUrl = setApiUrl(entity, action);
-    $.ajax({
-        url: apiUrl,
-        type: GET,
-        data:{
-            searchVal: searchVal,
-            offset: offset,
-            from: from
-        },
-        success: function (data) {
-            switch (entity) {
-                case 'track':
-                    $('#track-thead').show();
-                    $('#artist-thead').hide();
-                    $('#album-thead').hide();
-                    $('#info-title').text('Tracks');
-                    setupTrackTable(data);
-                    break;
-                case 'album':
-                    $('#track-thead').hide();
-                    $('#album-thead').show();
-                    $('#artist-thead').hide();
-                    $('#info-title').text('Albums');
-                    setupAlbumTable(data);
-                    break;
-                case 'artist':
-                    $('#track-thead').hide();
-                    $('#album-thead').hide();
-                    $('#artist-thead').show();
-                    $('#info-title').text('Artists');
-                    setupArtistTable(data);
-                    break;
+    if(!searchVal.match($regExInput)) {
+        $('div#snackbar').text("Please don't hack my application! ;-) ");
+        showSnackbar();
+    }else {
+        apiUrl = setApiUrl(entity, action);
+        $.ajax({
+            url: apiUrl,
+            type: GET,
+            data:{
+                searchVal: searchVal,
+                offset: offset,
+                from: from
+            },
+            success: function (data) {
+                switch (entity) {
+                    case 'track':
+                        $('#track-thead').show();
+                        $('#artist-thead').hide();
+                        $('#album-thead').hide();
+                        $('#info-title').text('Tracks');
+                        setupTrackTable(data);
+                        break;
+                    case 'album':
+                        $('#track-thead').hide();
+                        $('#album-thead').show();
+                        $('#artist-thead').hide();
+                        $('#info-title').text('Albums');
+                        setupAlbumTable(data);
+                        break;
+                    case 'artist':
+                        $('#track-thead').hide();
+                        $('#album-thead').hide();
+                        $('#artist-thead').show();
+                        $('#info-title').text('Artists');
+                        setupArtistTable(data);
+                        break;
+                }
+                updatePagination(data[data.length - 1], offset, currentPage);
+
+                //Make last table-row unclickable 
+                $('#music-info').on('click', 'td:last-child', function (e) {
+                    e.stopPropagation();
+                });
+
+            }, failure: function(e) {
+                console.log('failure: ' + e);
+            }, error: function(e) {
+                console.log('error: ' + e);
+                console.log(JSON.stringify(e));
             }
-            updatePagination(data[data.length - 1], offset, currentPage);
-
-            //Make last table-row unclickable 
-            $('#music-info').on('click', 'td:last-child', function (e) {
-                e.stopPropagation();
-            });
-
-        }, failure: function(e) {
-            console.log('failure: ' + e);
-        }, error: function(e) {
-            console.log('error: ' + e);
-            console.log(JSON.stringify(e));
-        }
-    });
+        });
+    }
 }
 
 

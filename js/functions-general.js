@@ -2,7 +2,7 @@
 let apiUrl;
 const POST = "POST";
 const GET = "GET";
-const $regExInput = /^[A-Za-z0-9_ ]*$/;
+const $regExInput = /^[A-Za-z0-9.,/_ ]*$/;
    
 
 // Setup Tables

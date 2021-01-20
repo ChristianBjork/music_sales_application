@@ -65,36 +65,49 @@ function createUser() {
         let fax = $('#fax').val();
         let email = $('#email').val();
 
-        apiUrl = setApiUrl("user", "create");
-        $.ajax({
-            url: apiUrl,
-            type: POST,
-            data: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                password: password,
-                company: company,
-                address: address,
-                city: city,
-                state: state,
-                country: country,
-                postalCode: postalCode,
-                phone: phone,
-                fax: fax,
-                email: email
-            }), 
-            success: function(data){
-                if(data.isUserCreated == true) {
-                    $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
-                } else {
-                    alert("Email already exists")
+        if(
+            firstName.length === 0  || lastName.length === 0 || email.length === 0  || company.length === 0 || address.length === 0  || city.length === 0 || 
+            state.length === 0  || country.length === 0 || postalCode.length === 0  || phone.length === 0 || fax.length === 0  || email.length === 0
+            ){
+            alert('Fields "Email" & "Password" are required');
+        } else if(
+            !firstName.match($regExInput) || !lastName.match($regExInput) || !email.match($regExInput) || !company.match($regExInput) || !address.match($regExInput) || !city.match($regExInput) || 
+            !state.match($regExInput) || !country.match($regExInput) || !postalCode.match($regExInput) || !phone.match($regExInput) || !fax.match($regExInput) || !email.match($regExInput)
+        ) {
+            alert("Please don't try to hack my application! ;-)");
+        }else {
+
+            apiUrl = setApiUrl("user", "create");
+            $.ajax({
+                url: apiUrl,
+                type: POST,
+                data: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    password: password,
+                    company: company,
+                    address: address,
+                    city: city,
+                    state: state,
+                    country: country,
+                    postalCode: postalCode,
+                    phone: phone,
+                    fax: fax,
+                    email: email
+                }), 
+                success: function(data){
+                    if(data.isUserCreated == true) {
+                        $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+                    } else {
+                        alert("Email already exists")
+                    }
+                }, failure: function(e) {
+                    console.log('failure: ' + e);
+                }, error: function(e) {
+                    console.log('error: ' + e);
+                    console.log(JSON.stringify(e));
                 }
-            }, failure: function(e) {
-                console.log('failure: ' + e);
-            }, error: function(e) {
-                console.log('error: ' + e);
-                console.log(JSON.stringify(e));
-            }
-        });
+            });
+        }
     });
 }
